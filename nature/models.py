@@ -393,6 +393,7 @@ class FeatureClass(models.Model):
     super_class = models.ForeignKey('FeatureClass', models.PROTECT, blank=True, null=True, db_column='paatunnus',
                                     related_name='subclasses')
     reporting = models.BooleanField(db_column='raportointi')
+    open_data = models.BooleanField(db_column='avoin_data', default=False)
     www = models.BooleanField()
     metadata = models.CharField(max_length=4000, blank=True, null=True)
 
