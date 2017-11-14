@@ -178,6 +178,12 @@ class PublicationType(models.Model):
         return str(self.name)
 
 
+class ProtectedFeatureQueryset(ProtectionLevelEnabledQuerySet):
+
+    def open_data(self):
+        return self.filter(feature_class__open_data=True)
+
+
 class AbstractFeature(ProtectionLevelMixin, models.Model):
     """AbstractFeature model that provides common fields for Feature and HistoricalFeature """
     fid = models.CharField(max_length=10, blank=True, null=True, db_column='tunnus')
@@ -194,6 +200,8 @@ class AbstractFeature(ProtectionLevelMixin, models.Model):
     area = models.FloatField(blank=True, null=True, db_column='pinta_ala')
     text = models.CharField(max_length=4000, blank=True, null=True, db_column='teksti')
     text_www = models.CharField(max_length=4000, blank=True, null=True, db_column='teksti_www')
+
+    objects = ProtectedFeatureQueryset.as_manager()
 
     class Meta:
         abstract = True
@@ -404,6 +412,12 @@ class HabitatType(models.Model):
         return str(self.name)
 
 
+class ProtectedFeatureClassQueryset(models.QuerySet):
+
+    def open_data(self):
+        return self.filter(open_data=True)
+
+
 class FeatureClass(models.Model):
     id = models.CharField(primary_key=True, max_length=10, db_column='tunnus')
     name = models.CharField(max_length=50, blank=True, null=True, db_column='nimi')
@@ -414,6 +428,8 @@ class FeatureClass(models.Model):
     open_data = models.BooleanField(db_column='avoin_data', default=False)
     www = models.BooleanField()
     metadata = models.CharField(max_length=4000, blank=True, null=True)
+
+    objects = ProtectedFeatureClassQueryset.as_manager()
 
     class Meta:
         ordering = ['id']
