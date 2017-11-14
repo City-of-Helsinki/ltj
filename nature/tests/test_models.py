@@ -16,6 +16,43 @@ from .factories import (
     EventTypeFactory, FrequencyFactory,
 )
 
+from ..models import Feature, ProtectionLevelMixin
+
+
+class TestProtectionLevelEnabledQuerySet(TestCase):
+
+    def setUp(self):
+        self.feature_admin = FeatureFactory(
+            name='admin',
+            protection_level=ProtectionLevelMixin.ADMIN_ONLY,
+        )
+        self.feature_admin_and_staff = FeatureFactory(
+            name='admin_and_staff',
+            protection_level=ProtectionLevelMixin.ADMIN_AND_STAFF,
+        )
+        self.feature_public = FeatureFactory(
+            name='public',
+            protection_level=ProtectionLevelMixin.PUBLIC,
+        )
+
+    def test_for_admin(self):
+        qs = Feature.objects.for_admin()
+        self.assertIn(self.feature_admin, qs)
+        self.assertIn(self.feature_admin_and_staff, qs)
+        self.assertIn(self.feature_public, qs)
+
+    def test_for_admin_and_staff(self):
+        qs = Feature.objects.for_admin_and_staff()
+        self.assertNotIn(self.feature_admin, qs)
+        self.assertIn(self.feature_admin_and_staff, qs)
+        self.assertIn(self.feature_public, qs)
+
+    def test_for_public(self):
+        qs = Feature.objects.for_public()
+        self.assertNotIn(self.feature_admin, qs)
+        self.assertNotIn(self.feature_admin_and_staff, qs)
+        self.assertIn(self.feature_public, qs)
+
 
 class TestOrigin(TestCase):
 

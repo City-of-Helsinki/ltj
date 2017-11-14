@@ -12,6 +12,22 @@ from django.contrib.gis.db import models
 from django.contrib.gis.geos import GEOSException
 
 
+class ProtectionLevelEnabledQuerySet(models.QuerySet):
+    """Custom queryset to filter protection level enabled queryset based on user roles"""
+
+    def for_admin(self):
+        """ADMIN have access to all objects"""
+        return self
+
+    def for_admin_and_staff(self):
+        """ADMIN_AND_STAFF have access to objects of which the protection level is PUBLIC or ADMIN_AND_STAFF"""
+        return self.filter(protection_level__in=[ProtectionLevelMixin.PUBLIC, ProtectionLevelMixin.ADMIN_AND_STAFF])
+
+    def for_public(self):
+        """PUBLIC have access to objects of which the protection level is PUBLIC"""
+        return self.filter(protection_level=ProtectionLevelMixin.PUBLIC)
+
+
 class ProtectionLevelMixin(models.Model):
     ADMIN_ONLY = 1
     ADMIN_AND_STAFF = 2
@@ -24,6 +40,8 @@ class ProtectionLevelMixin(models.Model):
     )
 
     protection_level = models.IntegerField(choices=PROTECTION_LEVEL_CHOICES, default=PUBLIC, db_column='suojaustasoid')
+
+    objects = ProtectionLevelEnabledQuerySet.as_manager()
 
     class Meta:
         abstract = True
