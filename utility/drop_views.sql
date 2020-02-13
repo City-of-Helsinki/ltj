@@ -1,5 +1,7 @@
+-- Nykyiset näkymät
 DROP VIEW IF EXISTS ltj_wfs_virka.arvo_kaapakohteet;
-DROP VIEW IF EXISTS ltj_wfs_virka.arvo_liito_orava;
+DROP VIEW IF EXISTS ltj_wfs_virka.arvo_liito_orava_ydinalueet;
+DROP VIEW IF EXISTS ltj_wfs_virka.arvo_liito_orava_elinalueet;
 DROP VIEW IF EXISTS ltj_wfs_virka.arvo_metsakohteet;
 DROP VIEW IF EXISTS ltj_wfs_virka.arvo_tarkeat_lepakkoalueet;
 DROP VIEW IF EXISTS ltj_wfs_virka.arvo_tarkeat_matelija_ja_sammakkoelainkohteet;
@@ -24,15 +26,17 @@ DROP VIEW IF EXISTS ltj_wfs_virka.vesi_purot;
 DROP VIEW IF EXISTS ltj_wfs_virka.vesi_lammet;
 DROP VIEW IF EXISTS ltj_wfs_virka.vesi_vedenalainen_roskaantuminen;
 DROP VIEW IF EXISTS ltj_wfs_virka.vesi_vesikasvilinjat;
-DROP VIEW IF EXISTS ltj_wfs_virka.uhanalaiset_luontotyypit;
+DROP VIEW IF EXISTS ltj_wfs_virka.luontotyypit_uhanalaiset;
 DROP VIEW IF EXISTS ltj_wfs_virka.lahokaviosammal_elinymparistot;
+DROP VIEW IF EXISTS ltj_wfs_virka.lahokaviosammal_tukialueet;
 DROP VIEW IF EXISTS ltj_wfs_virka.tarkeat_lintualueet;
-DROP VIEW IF EXISTS ltj_wfs_virka.biotoopit;
-DROP VIEW IF EXISTS ltj_wfs_virka.kunnostetut_purokohdat;
+DROP VIEW IF EXISTS ltj_wfs_virka.luontotyypit_biotooppiaineisto;
+DROP VIEW IF EXISTS ltj_wfs_virka.vesi_kunnostetut_purokohdat;
 DROP VIEW IF EXISTS ltj_wfs_virka.ekologiset_yhteydet;
 DROP VIEW IF EXISTS ltj_wfs_virka.metsaverkosto;
 DROP VIEW IF EXISTS ltj_wfs_avoin.arvo_kaapakohteet;
-DROP VIEW IF EXISTS ltj_wfs_avoin.arvo_liito_orava;
+DROP VIEW IF EXISTS ltj_wfs_avoin.arvo_liito_orava_ydinalueet;
+DROP VIEW IF EXISTS ltj_wfs_avoin.arvo_liito_orava_elinalueet;
 DROP VIEW IF EXISTS ltj_wfs_avoin.arvo_metsakohteet;
 DROP VIEW IF EXISTS ltj_wfs_avoin.arvo_tarkeat_lepakkoalueet;
 DROP VIEW IF EXISTS ltj_wfs_avoin.arvo_tarkeat_matelija_ja_sammakkoelainkohteet;
@@ -56,16 +60,24 @@ DROP VIEW IF EXISTS ltj_wfs_avoin.vesi_purot;
 DROP VIEW IF EXISTS ltj_wfs_avoin.vesi_lammet;
 DROP VIEW IF EXISTS ltj_wfs_avoin.vesi_vedenalainen_roskaantuminen;
 DROP VIEW IF EXISTS ltj_wfs_avoin.vesi_vesikasvilinjat;
-DROP VIEW IF EXISTS ltj_wfs_avoin.uhanalaiset_luontotyypit;
 DROP VIEW IF EXISTS ltj_wfs_avoin.lahokaviosammal_elinymparistot;
+DROP VIEW IF EXISTS ltj_wfs_avoin.lahokaviosammal_tukialueet;
 DROP VIEW IF EXISTS ltj_wfs_avoin.tarkeat_lintualueet;
-DROP VIEW IF EXISTS ltj_wfs_avoin.biotoopit;
+DROP VIEW IF EXISTS ltj_wfs_avoin.luontotyypit_biotooppiaineisto;
 DROP VIEW IF EXISTS ltj_wfs_avoin.ekologiset_yhteydet;
 DROP VIEW IF EXISTS ltj_wfs_avoin.metsaverkosto;
 DROP VIEW IF EXISTS ltj.ltj_kohteet;
 DROP VIEW IF EXISTS ltj.ltj_lajikohteet;
 
--- Alkuperäiset näkymät. Näitä on vielä joissain testikannoissa:
+
+-- Aikaisempia näkymiä 
+DROP VIEW IF EXISTS ltj_wfs_virka.arvo_liito_orava;
+DROP VIEW IF EXISTS ltj_wfs_avoin.arvo_liito_orava;
+DROP VIEW IF EXISTS ltj_wfs_virka.biotoopit;
+DROP VIEW IF EXISTS ltj_wfs_avoin.biotoopit;
+DROP VIEW IF EXISTS ltj_wfs_virka.uhanalaiset_luontotyypit;
+DROP VIEW IF EXISTS ltj_wfs_avoin.uhanalaiset_luontotyypit;
+DROP VIEW IF EXISTS ltj_wfs_virka.kunnostetut_purokohdat;
 DROP VIEW IF EXISTS ltj.arvo_kaapakohteet;
 DROP VIEW IF EXISTS ltj.arvo_liito_orava;
 DROP VIEW IF EXISTS ltj.arvo_metsakohteet;
