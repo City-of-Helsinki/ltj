@@ -1,5 +1,3 @@
-KESKEN!!!
-  
   -- New table for service metadata
   
 CREATE TABLE IF NOT EXISTS ltj.jakelumetadata (
@@ -346,6 +344,38 @@ FROM ((kohde
 JOIN luokka ON (((luokka.tunnus)::text = (kohde.luokkatunnus)::text)))
 JOIN jakelumetadata ON ((jakelumetadata.id = 1)))
 WHERE ((((kohde.luokkatunnus)::text = 'BK'::text) AND (kohde.voimassa = true)) AND (kohde.suojaustasoid <> 1));
+
+-- Virkaversio ekologisten yhteyksien verkosto
+
+CREATE OR REPLACE VIEW ltj_wfs_virka.ekologiset_yhteydet AS
+SELECT
+kohde.id,
+kohde.tunnus,
+kohde.luokkatunnus,
+luokka.nimi AS luokan_nimi,
+kohde.nimi,
+kohde.kuvaus,
+kohde.huom,
+kohde.digipvm,
+kohde.pvm_editoitu,
+kohde.digitoija,
+kohde.muokkaaja,
+kohde.suojaustasoid,
+kohde.pinta_ala AS pinta_ala_ha,
+kohde.geometry1,
+kohde.teksti AS kohdeteksti,
+'https://kartta.hel.fi/paikkatietohakemisto/metadata/?id=322&l=fi'::text AS metadata,
+('https://kartta.hel.fi/applications/ltj/reports/kohderaportti.aspx?id='::text || kohde.id) AS kohderaportti,
+jakelumetadata.datanomistaja,
+jakelumetadata.paivitetty_tietopalveluun
+FROM ((kohde
+JOIN luokka ON (((luokka.tunnus)::text = (kohde.luokkatunnus)::text)))
+JOIN jakelumetadata ON ((jakelumetadata.id = 1)))
+WHERE ((((kohde.luokkatunnus)::text = 'VYHT'::text) AND (kohde.voimassa = true)) AND (kohde.suojaustasoid <>1));
+  
+ALTER TABLE ltj_wfs_virka.ekologiset_yhteydet OWNER TO ltj;  
+
+jatka 
   
 -- Virkaversio eläinhavainnot:
 
@@ -1001,68 +1031,7 @@ WHERE
   
 ALTER TABLE ltj_wfs_virka.tarkeat_lintualueet OWNER TO ltj;
                                                                                      
--- Virkaversio biotooppikohteet
-
-CREATE OR REPLACE VIEW ltj_wfs_virka.biotoopit AS
-SELECT
-    kohde.id,
-    kohde.tunnus,
-    kohde.luokkatunnus,
-    luokka.nimi AS luokan_nimi,
-    kohde.nimi,
-    kohde.kuvaus,
-    kohde.huom,
-    kohde.digipvm,
-    kohde.pvm_editoitu,
-    kohde.digitoija,
-    kohde.muokkaaja,
-    kohde.suojaustasoid,
-    kohde.pinta_ala AS pinta_ala_ha,
-    kohde.geometry1,
-    kohde.teksti AS kohdeteksti,
-    'https://kartta.hel.fi/paikkatietohakemisto/metadata/?id=180&l=fi'::text AS metadata,
-    ('https://kartta.hel.fi/applications/ltj/reports/kohderaportti.aspx?id='::text || kohde.id) AS kohderaportti,
-    jakelumetadata.datanomistaja,
-    jakelumetadata.paivitetty_tietopalveluun
-FROM ltj.kohde
-    JOIN ltj.luokka ON luokka.tunnus::text = kohde.luokkatunnus::text
-    JOIN ltj.jakelumetadata ON jakelumetadata.id = 1
-WHERE
-    kohde.luokkatunnus::text = 'BK'::text AND
-    kohde.voimassa = true AND
-    kohde.suojaustasoid <> 1;
-  
-ALTER TABLE ltj_wfs_virka.biotoopit OWNER TO ltj;
-
--- Virkaversio ekologisten yhteyksien verkosto
-
-CREATE OR REPLACE VIEW ltj_wfs_virka.ekologiset_yhteydet AS
-SELECT kohde.id,
-kohde.tunnus,
-kohde.luokkatunnus,
-luokka.nimi AS luokan_nimi,
-kohde.nimi,
-kohde.kuvaus,
-kohde.huom,
-kohde.digipvm,
-kohde.pvm_editoitu,
-kohde.digitoija,
-kohde.muokkaaja,
-kohde.suojaustasoid,
-kohde.pinta_ala AS pinta_ala_ha,
-kohde.geometry1,
-kohde.teksti AS kohdeteksti,
-'https://kartta.hel.fi/paikkatietohakemisto/metadata/?id=322&l=fi'::text AS metadata,
-('https://kartta.hel.fi/applications/ltj/reports/kohderaportti.aspx?id='::text || kohde.id) AS kohderaportti,
-jakelumetadata.datanomistaja,
-jakelumetadata.paivitetty_tietopalveluun
-FROM ((kohde
-JOIN luokka ON (((luokka.tunnus)::text = (kohde.luokkatunnus)::text)))
-JOIN jakelumetadata ON ((jakelumetadata.id = 1)))
-WHERE ((((kohde.luokkatunnus)::text = 'VYHT'::text) AND (kohde.voimassa = true)) AND (kohde.suojaustasoid <> 1));
-  
-ALTER TABLE ltj_wfs_virka.ekologiset_yhteydet OWNER TO ltj;  
-                                                                                    
+                                                                                   
 -- Virkaversio vesi - kunnostetut purokohdat
 
 CREATE OR REPLACE VIEW ltj_wfs_virka.kunnostetut_purokohdat AS
