@@ -677,7 +677,7 @@ jakelumetadata.paivitetty_tietopalveluun
 FROM ((kohde
 JOIN luokka ON (((luokka.tunnus)::text = (kohde.luokkatunnus)::text)))
 JOIN jakelumetadata ON ((jakelumetadata.id = 1)))
-WHERE ((((kohde.luokkatunnus)::text = 'Kaava'::text) AND (kohde.voimassa = true)) AND (kohde.suojaustasoid <> 1));
+WHERE ((((kohde.luokkatunnus)::text = 'LSO'::text) AND (kohde.voimassa = true)) AND (kohde.suojaustasoid <> 1));
   
 ALTER TABLE ltj_wfs_virka.rauh_luonnonsuojeluohjelma OWNER TO ltj;
 
@@ -1655,7 +1655,7 @@ jakelumetadata.paivitetty_tietopalveluun
 FROM ((kohde
 JOIN luokka ON (((luokka.tunnus)::text = (kohde.luokkatunnus)::text)))
 JOIN jakelumetadata ON ((jakelumetadata.id = 1)))
-WHERE ((((kohde.luokkatunnus)::text = 'Kaava'::text) AND (kohde.voimassa = true)) AND (kohde.suojaustasoid = 3));
+WHERE ((((kohde.luokkatunnus)::text = 'LSO'::text) AND (kohde.voimassa = true)) AND (kohde.suojaustasoid = 3));
   
 ALTER TABLE ltj_wfs_avoin.rauh_luonnonsuojeluohjelma OWNER TO ltj;
 
