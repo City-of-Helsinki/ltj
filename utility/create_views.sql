@@ -454,7 +454,7 @@ WHERE ((((kohde.luokkatunnus)::text = 'BK'::text) AND (kohde.voimassa = true)) A
 ALTER TABLE ltj_wfs_virka.luontotyypit_biotooppiaineisto OWNER TO ltj;
 
 
--- Virkaversio uhanalaiset luontotyypit:
+-- Virkaversio luontotyypit:
 
 CREATE OR REPLACE VIEW ltj_wfs_virka.luontotyypit_uhanalaiset AS
 SELECT
@@ -1045,7 +1045,7 @@ JOIN luokka ON (((luokka.tunnus)::text = (kohde.luokkatunnus)::text)))
 JOIN jakelumetadata ON ((jakelumetadata.id = 1)))
 WHERE ((((kohde.luokkatunnus)::text = 'KUNN'::text) AND (kohde.voimassa = true)) AND (kohde.suojaustasoid <> 1));
 
-ALTER TABLE ltj_wfs_virka.kunnostetut_purokohdat OWNER TO ltj;
+ALTER TABLE ltj_wfs_virka_vesi.kunnostetut_purokohdat OWNER TO ltj;
 
 
 -- Avoin data arvokkaat kääpäkohteet:
@@ -1686,7 +1686,7 @@ JOIN luokka ON (((luokka.tunnus)::text = (kohde.luokkatunnus)::text)))
 JOIN jakelumetadata ON ((jakelumetadata.id = 1)))
 WHERE (((((kohde.luokkatunnus)::text = 'Natur'::text) AND (kohde.voimassa = true)) AND (kohde.suojaustasoid = 3)) AND (geometrytype(kohde.geometry1) ~~ '%POLYGON'::text));
   
-ALTER TABLE ltj_wfs_avoin.rauh_natura OWNER TO ltj;
+ALTER TABLE ltj_wfs_avoin.rauh_natura_aluemaiset OWNER TO ltj;
 
                  
 -- Avoin data rauhoitetut natura viivamaiset:
@@ -1983,50 +1983,54 @@ ALTER TABLE ltj_wfs_avoin.vesi_vesikasvilinjat OWNER TO ltj;
   
 -- ltj_kohteet-view for SpatialWeb
 
-SELECT kohde.id,
-(st_force2d(kohde.geometry1))::geometry(Geometry,3879) AS geometry1,
-COALESCE(kohde.tunnus, kohde.id::text::character varying) AS tunnus,
-kohde.luokkatunnus,
-kohde.nimi,
-kohde.kuvaus,
-kohde.huom,
-kohde.voimassa,
-kohde.numero,
-kohde.pinta_ala,
-kohde.suojaustasoid AS suojaustasokohde,
-kohde.teksti AS tieto,
-CASE
-WHEN (NOT ((kohde.teksti_www)::text = ''::text)) THEN kohde.teksti_www
-ELSE kohde.teksti
-END AS tieto_www,
-array_to_string(array_agg(arvo.luokka), ', '::text) AS suojelu_arvo_luokka,
-array_to_string(array_agg(arvo.selite), ', '::text) AS suojelu_arvo_selite
-FROM ((kohde
-LEFT JOIN arvo_kohde ON ((arvo_kohde.kohdeid = kohde.id)))
-LEFT JOIN arvo ON ((arvo.id = arvo_kohde.arvoid)))
-WHERE (kohde.voimassa AND st_isvalid(kohde.geometry1))
-GROUP BY kohde.id;
+CREATE OR REPLACE VIEW ltj.ltj_kohteet
+ AS
+ SELECT kohde.id,
+    st_force2d(kohde.geometry1)::geometry(Geometry,3879) AS geometry1,
+    COALESCE(kohde.tunnus, kohde.id::character varying(10)) AS tunnus,
+    kohde.luokkatunnus,
+    kohde.nimi,
+    kohde.kuvaus,
+    kohde.huom,
+    kohde.voimassa,
+    kohde.numero,
+    kohde.pinta_ala,
+    kohde.suojaustasoid AS suojaustasokohde,
+    kohde.teksti AS tieto,
+        CASE
+            WHEN NOT kohde.teksti_www::text = ''::text THEN kohde.teksti_www
+            ELSE kohde.teksti
+        END AS tieto_www,
+    array_to_string(array_agg(arvo.luokka), ', '::text) AS suojelu_arvo_luokka,
+    array_to_string(array_agg(arvo.selite), ', '::text) AS suojelu_arvo_selite
+   FROM kohde
+     LEFT JOIN arvo_kohde ON arvo_kohde.kohdeid = kohde.id
+     LEFT JOIN arvo ON arvo.id = arvo_kohde.arvoid
+  WHERE kohde.voimassa AND st_isvalid(kohde.geometry1)
+  GROUP BY kohde.id;
 
 ALTER TABLE ltj.ltj_kohteet OWNER TO ltj;
 
-  
 -- ltj_lajikohteet-view for SpatialWeb
-  
-SELECT kohde.id,
-kohde.luokkatunnus,
-kohde.tunnus,
-kohde.nimi,
-(st_force2d(kohde.geometry1))::geometry(Geometry,3879) AS geometry1,
-kohde.suojaustasoid AS suojaustasokohde,
-lajihavainto.suojaustasoid AS suojaustasohavainto,
-lajirekisteri.suojaustasoid AS suojaustasolaji,
-luokka.nimi AS luokka,
-luokka.www AS luokka_www,
-lajihavainto.lajid
-FROM (((kohde
-JOIN luokka ON (((luokka.tunnus)::text = (kohde.luokkatunnus)::text)))
-JOIN lajihavainto ON ((kohde.id = lajihavainto.kohdeid)))
-JOIN lajirekisteri ON ((lajihavainto.lajid = lajirekisteri.id)))
-WHERE (kohde.voimassa AND st_isvalid(kohde.geometry1));
+
+CREATE OR REPLACE VIEW ltj.ltj_lajikohteet
+ AS
+ SELECT kohde.id,
+    kohde.luokkatunnus,
+    kohde.tunnus,
+    kohde.nimi,
+    st_force2d(kohde.geometry1)::geometry(Geometry,3879) AS geometry1,
+    kohde.suojaustasoid AS suojaustasokohde,
+    lajihavainto.suojaustasoid AS suojaustasohavainto,
+    lajirekisteri.suojaustasoid AS suojaustasolaji,
+    luokka.nimi AS luokka,
+    luokka.www AS luokka_www,
+    lajihavainto.lajid
+   FROM kohde
+     JOIN luokka ON luokka.tunnus::text = kohde.luokkatunnus::text
+     JOIN lajihavainto ON kohde.id = lajihavainto.kohdeid
+     JOIN lajirekisteri ON lajihavainto.lajid = lajirekisteri.id
+  WHERE kohde.voimassa AND st_isvalid(kohde.geometry1);
 
 ALTER TABLE ltj.ltj_lajikohteet OWNER TO ltj;
+
