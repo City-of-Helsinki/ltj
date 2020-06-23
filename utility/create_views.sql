@@ -2033,4 +2033,3 @@ CREATE OR REPLACE VIEW ltj.ltj_lajikohteet
   WHERE kohde.voimassa AND st_isvalid(kohde.geometry1);
 
 ALTER TABLE ltj.ltj_lajikohteet OWNER TO ltj;
-
