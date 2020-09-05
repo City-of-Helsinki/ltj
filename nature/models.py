@@ -584,7 +584,7 @@ class Species(ProtectionLevelMixin, models.Model):
         ordering = ['id']
         db_table = 'lajirekisteri'
         verbose_name = _('species')
-        verbose_name_plural = _('species')
+        verbose_name_plural = _('species register')
 
     def __str__(self):
         name_list = [self.name_fi, self.name_sci_1, self.name_subspecies_1]
