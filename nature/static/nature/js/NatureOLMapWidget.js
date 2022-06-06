@@ -223,6 +223,7 @@ ol.inherits(GeometryTypeControl, ol.control.Control);
             ['avoindata:Kantakartan_maastotiedot', 'Kantakartan maastotiedot'],
             ['avoindata:Kantakartta', 'Kantakartta'],
             ['avoindata:Opaskartta_Helsinki', 'Opaskartta Helsinki']
+            ['avoindata:Ortoilmakuva_2021_10cm', 'Ortoilmakuva 2021']
         ].sort(function(a, b) {
             // sort layer in reverse-alphabetic order, the layer order will
             // be reversed when adding to layer switcher
