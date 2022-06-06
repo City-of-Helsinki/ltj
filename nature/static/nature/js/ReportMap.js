@@ -17,6 +17,7 @@
             'avoindata:Kiinteistokartan_maastotiedot',
             'avoindata:Opaskartta_PKS',
             'avoindata:Ortoilmakuva'
+            'avoindata:Ortoilmakuva_2021_10cm'
         ];
         var wmtsLayerImageFormat = {
             'avoindata:Ortoilmakuva': 'image/jpeg'
