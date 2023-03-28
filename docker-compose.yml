@@ -18,10 +18,6 @@ services:
       - rabbitmq
     environment:
 # Project specific env vars for this project:
-      - DEBUG=True
-      - SECRET_KEY="foo"
-      - SHARED_SECRET="secret"
-      - DATABASE_URL="postgis://bergenia:bergenia@postgis:5432/bergenia"
 # Service level env vars:
       - HTTPS=off
       - LANG=en_US.utf8
