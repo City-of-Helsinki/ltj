@@ -28,7 +28,7 @@ pyasn1==0.4.8             # via python-jose, rsa
 pycparser==2.20           # via cffi
 pycryptodomex==3.9.8      # via pyjwkest
 pyjwkest==1.4.2           # via drf-oidc-auth
-pyjwt==1.7.1              # via social-auth-core
+pyjwt==2.4.0              # via social-auth-core
 pyshp==2.1.2              # via -r requirements.in
 python-jose==3.2.0        # via django-helusers
 python3-openid==3.2.0     # via social-auth-core
