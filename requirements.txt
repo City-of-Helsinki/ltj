@@ -4,7 +4,7 @@
 #
 #    pip-compile requirements.in
 #
-certifi==2020.6.20        # via requests, sentry-sdk
+certifi==2022.12.7        # via requests, sentry-sdk
 cffi==1.14.3              # via cryptography
 chardet==3.0.4            # via requests
 cryptography==3.3.2       # via social-auth-core
@@ -28,7 +28,7 @@ pyasn1==0.4.8             # via python-jose, rsa
 pycparser==2.20           # via cffi
 pycryptodomex==3.9.8      # via pyjwkest
 pyjwkest==1.4.2           # via drf-oidc-auth
-pyjwt==2.4.0              # via social-auth-core
+pyjwt==2.4.0             # via social-auth-core
 pyshp==2.1.2              # via -r requirements.in
 python-jose==3.2.0        # via django-helusers
 python3-openid==3.2.0     # via social-auth-core
