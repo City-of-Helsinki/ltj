@@ -41,12 +41,14 @@ services:
     tty: true
 
   postgis:
-    image: postgis/postgis:10-3.2-alpine
+    image: postgis/postgis:13-3.3-alpine
     environment:
       - POSTGRES_PASSWORD=bergenia
-      - POSTGRES_USER=bergenia
-      - POSTGRES_DB=bergenia
+      - POSTGRES_USER=ltj
+      - POSTGRES_DB=ltj
+      - LANG=fi_FI.UTF-8
     volumes:
+      - ./postgis-initdb:/docker-entrypoint-initdb.d
       - postgis:/var/lib/postgis/data
     ports:
       - 5432
