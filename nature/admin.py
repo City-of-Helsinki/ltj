@@ -281,7 +281,7 @@ class FeatureAdmin(admin.GeoModelAdmin):
 @admin.register(HabitatType)
 class HabitatTypeAdmin(admin.ModelAdmin):
     list_display = ("id", "name", "code", "group")
-    search_fields = ("id", "name", "code", "group", "lisatieto")
+    search_fields = ("id", "name", "code", "group", "additional_info")
     list_filter = ("group",)
     actions = None
     form = HabitatTypeForm
