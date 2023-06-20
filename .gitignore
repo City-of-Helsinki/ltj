@@ -17,3 +17,9 @@ config.env
 
 # dev media directory
 media/
+# static directory
+static/
+
+# Database dump files
+*.backup
+*.sql
