@@ -1,0 +1,3242 @@
+---
+openapi: 3.0.2
+#
+# This document is work in progress
+#
+# Description and other text fields are not checked. These locations are
+# marked with TODO comment line
+
+
+#TODO Change these fields
+info:
+  title: 'City of Helsinki nature database API (LTJ)'
+  description: |-
+      This document is work in progress and API is not yet published
+
+# TODO Update legal documents and contact information
+#  termsOfService: ''
+#  license: ''
+#  contact: ''
+  version: v1
+
+
+servers:
+  - description: City of Helsinki nature database development server
+    url: https://ltj.dev.hel.ninja/ltj-dev/v1
+
+
+paths:
+  /abundance/:
+    get:
+      operationId: listAbundances
+      #TODO
+      description: List of abundance information for observation
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Abundance'
+          description: Paginated list of observation abundancies
+      tags:
+      - v1
+
+  /abundance/{id}/:
+    get:
+      operationId: retrieveAbundance
+      description: Abudance information for observation
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ID of this abundance
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Abundance'
+          description: Abundance infrotmation of observation
+      tags:
+      - v1
+
+  /breeding_degree/:
+    get:
+      operationId: listBreedingDegrees
+      description: List of breeding degrees of observation
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/BreedingDegree'
+          description: Paginated list of observation breeding degrees
+      tags:
+      - v1
+
+  /breeding_degree/{id}/:
+    get:
+      operationId: retrieveBreedingDegree
+      description: Breeding degree for observation
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ID of breeding degree
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BreedingDegree'
+          description: Breeding degree for observation
+      tags:
+      - v1
+
+  /feature/:
+    get:
+      operationId: listFeatures
+      description: List of features or locations in nature
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Feature'
+          description: Paginated list of features and locations in nature
+      tags:
+      - v1
+
+  /feature/{id}/:
+    get:
+      operationId: retrieveFeature
+      description: Feature or location in nature
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this feature.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Feature'
+          description: Feature or location in ature
+      tags:
+      - v1
+
+  /feature_class/:
+    get:
+      operationId: listFeatureClass
+      description: List of feature classes
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/FeatureClass'
+          description: Paginated list of feature classes
+      tags:
+      - v1
+
+  /feature_class/{id}/:
+    get:
+      operationId: retrieveFeatureClass
+      description: Feature class
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique value identifying this feature class.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FeatureClass'
+          description: Feature class
+      tags:
+      - v1
+
+  /feature_value/:
+    get:
+      operationId: listFeatureValues
+      description: List of connections between features and values
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/FeatureValue'
+          description: Paginated list of feature and value connections
+      tags:
+      - v1
+
+  /feature_value/{id}/:
+    get:
+      operationId: retrieveFeatureValue
+      description: Connection between features and values
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this feature value.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FeatureValue'
+          description: Connection between feature and value
+      tags:
+      - v1
+
+  /feature_publication/:
+    get:
+      operationId: listFeaturePublications
+      description: List of connections between features and publications
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/FeaturePublication'
+          description: Paginated list of connections between features and publications
+      tags:
+      - v1
+
+  /feature_publication/{id}/:
+    get:
+      operationId: retrieveFeaturePublication
+      description: Connection between feature and publication
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this feature publication.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FeaturePublication'
+          description: Connection between feature and publication
+      tags:
+      - v1
+
+  /feature_link/:
+    get:
+      operationId: listFeatureLinks
+      description: List of links for features
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/FeatureLink'
+          description: Paginated list of feature links
+      tags:
+      - v1
+
+  /feature_link/{id}/:
+    get:
+      operationId: retrieveFeatureLink
+      description: Link for feature
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this feature link.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FeatureLink'
+          description: Link for feature
+      tags:
+      - v1
+
+  /frequency/:
+    get:
+      operationId: listFrequencys
+      description: List of friequencies for observation
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Frequency'
+          description: Paginated list of frequencies for observation
+      tags:
+      - v1
+
+  /frequency/{id}/:
+    get:
+      operationId: retrieveFrequency
+      description: Frequency of observation
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this frequency.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Frequency'
+          description: Frequency information of observation
+      tags:
+      - v1
+
+  /value/:
+    get:
+      operationId: listValues
+      description: List of feature value objects
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Value'
+          description: Paginated list of frequencies for value objects
+      tags:
+      - v1
+
+  /value/{id}/:
+    get:
+      operationId: retrieveValue
+      description: Feature value
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this value.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Value'
+          description: Feature value object
+      tags:
+      - v1
+
+  /species/:
+    get:
+      operationId: listSpecies
+      description: List of species information objects
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Species'
+          description: Paginated list of frequencies for species objects
+      tags:
+      - v1
+
+  /species/{id}/:
+    get:
+      operationId: retrieveSpecies
+      description: Species information
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this species.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Species'
+          description: Species information object
+      tags:
+      - v1
+
+  /link_type/:
+    get:
+      operationId: listLinkTypes
+      description: List of feature link types
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/LinkType'
+          description: Paginated list of frequencies for link type objects
+      tags:
+      - v1
+
+  /link_type/{id}/:
+    get:
+      operationId: retrieveLinkType
+      description: Feature link type
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this link type.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LinkType'
+          description: Feature link type object
+      tags:
+      - v1
+
+  /migration_class/:
+    get:
+      operationId: listMigrationClass
+      description: List of migration information for observation data
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/MigrationClass'
+          description: Paginated list of frequencies for migration class objects
+      tags:
+      - v1
+
+  /migration_class/{id}/:
+    get:
+      operationId: retrieveMigrationClass
+      description: Migration information for observation
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this migration class.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MigrationClass'
+          description: Migration class object
+      tags:
+      - v1
+
+  /occurrence/:
+    get:
+      operationId: listOccurrences
+      description: List of observation occurrence information
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Occurrence'
+          description: Paginated list of frequencies for occurrence objects
+      tags:
+      - v1
+
+  /occurrence/{id}/:
+    get:
+      operationId: retrieveOccurrence
+      description: Observation occurrence
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this occurrence.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Occurrence'
+          description: Occurrence object
+      tags:
+      - v1
+
+  /observation/:
+    get:
+      operationId: listObservations
+      description: List of species observations
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Observation'
+          description: Paginated list of frequencies for observation objects
+      tags:
+      - v1
+
+  /observation/{id}/:
+    get:
+      operationId: retrieveObservation
+      description: Species observation
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this observation.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Observation'
+          description: Observation object
+      tags:
+      - v1
+
+  /observation_series/:
+    get:
+      operationId: listObservationSeries
+      description: List of observation series
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ObservationSeries'
+          description: Paginated list of frequencies for observation series objects
+      tags:
+      - v1
+
+  /observation_series/{id}/:
+    get:
+      operationId: retrieveObservationSeries
+      description: Observation series information
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this observation series.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObservationSeries'
+          description: Observation series object
+      tags:
+      - v1
+
+  /habitat_type/:
+    get:
+      operationId: listHabitatTypes
+      description: List of habitat types
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/HabitatType'
+          description: Paginated list of frequencies for habitat type objects
+      tags:
+      - v1
+
+  /habitat_type/{id}/:
+    get:
+      operationId: retrieveHabitatType
+      description: Habitat type register
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this habitat type.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HabitatType'
+          description: Habitat type object
+      tags:
+      - v1
+
+  /habitat_type_observation/:
+    get:
+      operationId: listHabitatTypeObservations
+      description: List of habitat type observations
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/HabitatTypeObservation'
+          description: Paginated list of frequencies for habitat type observation objects
+      tags:
+      - v1
+
+  /habitat_type_observation/{id}/:
+    get:
+      operationId: retrieveHabitatTypeObservation
+      description: Habitat type observation
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this habitat type observation.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HabitatTypeObservation'
+          description: habitat type observation object
+      tags:
+      - v1
+
+  /habitat_type_regulation/:
+    get:
+      operationId: listHabitatTypeRegulations
+      description: List of habitat type and regulation connections
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/HabitatTypeRegulation'
+          description: Paginated list of frequencies for habitat type and regulation objects connections
+      tags:
+      - v1
+
+  /habitat_type_regulation/{id}/:
+    get:
+      operationId: retrieveHabitatTypeRegulation
+      description: Connection between habitat type and regulation
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this habitat type regulation.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HabitatTypeRegulation'
+          description: Habitat type and regulation objects connection
+      tags:
+      - v1
+
+  /publication/:
+    get:
+      operationId: listPublications
+      description: List of publications relevant to natural features
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Publication'
+          description: Paginated list of frequencies for publication objects
+      tags:
+      - v1
+
+  /publication/{id}/:
+    get:
+      operationId: retrievePublication
+      description: Publication related to natural feature
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this publication.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Publication'
+          description: Publication object
+      tags:
+      - v1
+
+  /publication_type/:
+    get:
+      operationId: listPublicationTypes
+      description: List of publication types
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/PublicationType'
+          description: Paginated list of frequencies for pyblication type objects
+      tags:
+      - v1
+
+  /publication_type/{id}/:
+    get:
+      operationId: retrievePublicationType
+      description: Publication type information
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this publication type.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicationType'
+          description: Publication type object
+      tags:
+      - v1
+
+  /protection/:
+    get:
+      operationId: listProtections
+      description: List of protection information
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Protection'
+          description: Paginated list of frequencies for protection objects
+      tags:
+      - v1
+
+  /protection/{id}/:
+    get:
+      operationId: retrieveProtection
+      description: Protection information for feature
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique value identifying this protection.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Protection'
+          description: Protection objects
+      tags:
+      - v1
+
+  /regulation/:
+    get:
+      operationId: listRegulations
+      description: List of species regulation information
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Regulation'
+          description: Paginated list of frequencies for regulation object
+      tags:
+      - v1
+
+  /regulation/{id}/:
+    get:
+      operationId: retrieveRegulation
+      description: Ragulation information concerning species
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this regulation.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Regulation'
+          description: Regultaion object
+      tags:
+      - v1
+
+  /transaction/:
+    get:
+      operationId: listTransactions
+      description: List of regulation transaction information
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Transaction'
+          description: Paginated list of frequencies for transaction objects
+      tags:
+      - v1
+
+  /transaction/{id}/:
+    get:
+      operationId: retrieveTransaction
+      description: Information about changes for regulations or protection concerning natural features or areas
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this transaction.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+          description: Transaction object
+      tags:
+      - v1
+
+  /transaction_type/:
+    get:
+      operationId: listTransactionTypes
+      description: List of transaction types
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/TransactionType'
+          description: Paginated list of frequencies for transaction type objects
+      tags:
+      - v1
+
+  /transaction_type/{id}/:
+    get:
+      operationId: retrieveTransactionType
+      description: Type information for transaction
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this transaction type.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionType'
+          description: Transaction type object
+      tags:
+      - v1
+
+  /transaction_feature/:
+    get:
+      operationId: listTransactionFeatures
+      description: List of connections between transactions and features
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/TransactionFeature'
+          description: Paginated list of frequencies of connections between transactions and features
+      tags:
+      - v1
+
+  /transaction_feature/{id}/:
+    get:
+      operationId: retrieveTransactionFeature
+      description: Connection between features and transactions
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this transaction feature.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionFeature'
+          description: transaction feature object
+      tags:
+      - v1
+
+  /protection_criterion/:
+    get:
+      operationId: listCriterions
+      description: List of protection criterions
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Criterion'
+          description: Paginated list of frequencies for protection criterion objects
+      tags:
+      - v1
+
+  /protection_criterion/{id}/:
+    get:
+      operationId: retrieveCriterion
+      description: Description of protection criterion
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this criterion.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Criterion'
+          description: Protection criterion objects
+      tags:
+      - v1
+
+  /protection_conservation_programme/:
+    get:
+      operationId: listProtectionConservationProgrammes
+      description: List of connections between protection and conservation program objects
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ProtectionConservationProgramme'
+          description: Paginated list of frequencies of connections between protection and conservation program objects
+      tags:
+      - v1
+
+  /protection_conservation_programme/{id}/:
+    get:
+      operationId: retrieveProtectionConservationProgramme
+      description: Connection between protection and conservation program
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this protection conservation
+          programme.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProtectionConservationProgramme'
+          description: protection conservation programme object
+      tags:
+      - v1
+
+  /conservation_programme/:
+    get:
+      operationId: listConservationProgrammes
+      description: List of conservation programs
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ConservationProgramme'
+          description: Paginated list of frequencies for conservation program objects
+      tags:
+      - v1
+
+  /conservation_programme/{id}/:
+    get:
+      operationId: retrieveConservationProgramme
+      description: Conservation program description for protection
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this conservation programme.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConservationProgramme'
+          description: Conservation program object
+      tags:
+      - v1
+
+  /origin/:
+    get:
+      operationId: listOrigins
+      description: List of origin information for species observations
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Origin'
+          description: Paginated list of frequencies for origin objects
+      tags:
+      - v1
+
+  /origin/{id}/:
+    get:
+      operationId: retrieveOrigin
+      description: Species observation origin information
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this origin.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Origin'
+          description: Origin object
+      tags:
+      - v1
+
+  /species_regulation/:
+    get:
+      operationId: listSpeciesRegulations
+      description: List of connections between species and regulations
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/SpeciesRegulation'
+          description: Paginated list of frequencies for species regulation objects
+      tags:
+      - v1
+
+  /species_regulation/{id}/:
+    get:
+      operationId: retrieveSpeciesRegulation
+      description: Connection between species register and regulation
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this species regulation.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SpeciesRegulation'
+          description: Species regulation object
+      tags:
+      - v1
+
+  /square/:
+    get:
+      operationId: listSquares
+      description: List of squares
+        #TODO This needs clarification
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Square'
+          description: Paginated list of frequencies for square objects
+      tags:
+      - v1
+
+  /square/{id}/:
+    get:
+      operationId: retrieveSquare
+      description: Square
+        #TODO This needs a description
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique value identifying this square.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Square'
+          description: square object
+      tags:
+      - v1
+
+
+components:
+  schemas:
+
+    Feature:
+      type: object
+      description: |-
+          Natural feature or area
+          #TODO Check this description
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          description: Database ID number
+        url:
+          type: string
+          readOnly: true
+          description: Direct link to this object in API
+        name:
+          type: string
+          nullable: true
+          maxLength: 80
+          description: Feature or area name
+        fid:
+          type: string
+          nullable: true
+          maxLength: 10
+          description: Feature identification number. May include letters and digits
+        feature_class:
+          type: string
+          description: URL to feature class object
+        geometry:
+          type: object
+          properties:
+            type:
+              type: string
+              nullable: false
+              description: Type of coordinate. Possible values are Point, Polygon, MultiPolygon or LineString
+                #TODO This needs to be checked
+            coordinates:
+              #TODO This is usualy an array of arrays but with MultiPolygon it
+              # is array of arrays but there didn't seem to be a way to document
+              # different types of return values
+              type: array
+              items:
+                type: array
+                items:
+                  type: number
+              nullable: false
+              description: |-
+                  List of geolocations in EPSG:4326 (WGS 84) system. Entries
+                  in includes longitude and latitude. Some values may include
+                  latitude of zero.
+                  #TODO This needs to be checked
+          description: Geolocation or shape of feature
+        description:
+          type: string
+          nullable: true
+          maxLength: 255
+          description: Short description of feature
+        notes:
+          type: string
+          nullable: true
+          maxLength: 255
+          description: Additional information or notes for feature
+        active:
+          type: boolean
+          description: Is this feature active
+            #TODO Needs checking and some more information
+        created_time:
+          type: string
+          format: date
+          readOnly: true
+          nullable: true
+          description: Date for when this feature was added to database
+        last_modified_time:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+          description: Date and time for last modification of this feature
+        number:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          description: Field for additional information
+            #TODO This needs clarification
+        area:
+          type: number
+          readOnly: true
+          description: Area size in hectare
+        text:
+          type: string
+          readOnly: true
+          description: Textual description for the feature. Text may include HTML formating
+            #TODO This needs to be checked
+        values:
+          type: array
+          items:
+            type: string
+          readOnly: true
+          description: List of api URLs to related value objects
+        publications:
+          type: array
+          items:
+            type: string
+          readOnly: true
+          description: List of api URLs to related publications
+        observations:
+          type: array
+          items:
+            type: string
+          description: List of api URLs to related publications
+        habitat_type_observations:
+          type: array
+          items:
+            type: string
+          description: List of api URLs to habitat type observation relaed to this feature
+        links:
+          type: array
+          description: List of links related to this article
+          items:
+            $ref: '#/components/schemas/FeatureLink'
+        square:
+          $ref: '#/components/schemas/Square'
+        protection:
+          $ref: '#/components/schemas/Protection'
+        transactions:
+          type: array
+          items:
+            type: string
+          readOnly: true
+          description: List of API URLs related to this feature
+        protection_level:
+          enum: [1, 2, 3]
+          type: integer
+          description: API visibility level for this object
+      required:
+      - feature_class
+      - geometry
+      - observations
+      - habitat_type_observations
+      - links
+      - square
+      - protection
+
+    FeatureClass:
+      type: object
+      description: Class for natural feature or area
+        #TODO Check this description
+      properties:
+        id:
+          type: string
+          maxLength: 10
+          description: Short text ID
+        url:
+          type: string
+          readOnly: true
+          description: API URL to this object
+        name:
+          type: string
+          nullable: true
+          maxLength: 50
+          description: Class name
+        additional_info:
+          type: string
+          nullable: true
+          maxLength: 255
+          description: Additional comments or information
+        super_class:
+          type: string
+          nullable: true
+          description: API URL to super class object
+        reporting:
+          type: boolean
+          description: Is this class included in reporting
+            #TODO This description needs checking and clarification
+        www:
+          type: boolean
+          description: Is this class shown in public version
+            #TODO This needs to be checked
+        metadata:
+          type: string
+          nullable: true
+          maxLength: 4000
+          description: Link to metadata
+        features:
+          type: array
+          items:
+            type: string
+          description: List of links to features in this class
+        open_data:
+          type: boolean
+          description: Will this class be shown in public API
+      required:
+      - id
+      - features
+
+    FeatureLink:
+      type: object
+      description: Web link for feature
+        #TODO Check this description
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          description: Link database ID number
+        url:
+          type: string
+          readOnly: true
+          description: Direct link to this object in API
+        link:
+          type: string
+          nullable: true
+          maxLength: 4000
+          description: Link URL address
+        text:
+          type: string
+          nullable: true
+          maxLength: 4000
+          description: Text related to link ei. image caption
+        link_type:
+          type: string
+          readOnly: true
+          description: Description of link type
+        ordering:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          description: Links are ordered based on this value in report
+            #TODO May need better wording
+        link_text:
+          type: string
+          nullable: true
+          maxLength: 100
+          description: One line description for link
+        protection_level:
+          enum: [1, 2, 3]
+          type: integer
+          description: API visibility level for this object
+
+    Value:
+      type: object
+      description: |-
+          Description about value this natural feature holds
+          #TODO Check this description
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          description: Database ID for this object
+        url:
+          type: string
+          readOnly: true
+          description: API URL to this object
+        explanation:
+          type: string
+          nullable: true
+          maxLength: 50
+          description: Short description what this value means
+        value:
+          type: string
+          nullable: true
+          maxLength: 10
+          description: Value class ei. 1, 2 or 3 or i, ii or iii
+            #TODO Check this description
+        date:
+          type: string
+          format: date
+          nullable: true
+          description: Date given by user
+        link:
+          type: string
+          nullable: true
+          maxLength: 4000
+          description: Link to additional information
+        features:
+          type: array
+          items:
+            type: string
+          readOnly: true
+          description: List of links to related feature objects
+
+    FeatureValue:
+      type: object
+      description: Connection table for features and values
+        #TODO Check this description
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          description: Database ID for this object
+        url:
+          type: string
+          readOnly: true
+          description: API URL to this object
+        value:
+          type: string
+          description: API URL to value object
+        feature:
+          type: string
+          description: API URL to feature object
+      required:
+      - value
+      - feature
+
+    FeaturePublication:
+      type: object
+      description: Connection table for features and publications
+        #TODO Check this description
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          description: Database ID for this object
+        url:
+          type: string
+          readOnly: true
+          description: API URL to this object
+        feature:
+          type: string
+          description: API URL to feature object
+        publication:
+          type: string
+          description: API URL to publication object
+      required:
+      - feature
+      - publication
+
+
+    Observation:
+      type: object
+      description: |-
+          Species observation
+          #TODO Check this description
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          description: Database ID for this object
+        url:
+          type: string
+          readOnly: true
+          description: API URL to this object
+        feature:
+          type: string
+          description: API URL to related feature
+        species:
+          type: string
+          description: API URL to observed species
+        series:
+          type: string
+          nullable: true
+          description: API URL to observation series this observation os part of
+        abundance:
+          $ref: '#/components/schemas/Abundance'
+        frequency:
+          $ref: '#/components/schemas/Frequency'
+        migration_class:
+          $ref: '#/components/schemas/MigrationClass'
+        origin:
+          $ref: '#/components/schemas/Origin'
+        breeding_degree:
+          $ref: '#/components/schemas/BreedingDegree'
+        description:
+          type: string
+          nullable: true
+          maxLength: 255
+          description: Description of observation
+        notes:
+          type: string
+          nullable: true
+          maxLength: 100
+          description: Information about observation or other notes
+        date:
+          type: string
+          format: date
+          nullable: true
+          description: User given date. Date may come from observation series and in that case this is not needed
+        occurrence:
+          type: string
+          readOnly: true
+          description: API URL to occurance object
+        created_time:
+          type: string
+          format: date-time
+          readOnly: true
+          description: Date and time this object was added to database
+        last_modified_time:
+          type: string
+          format: date-time
+          readOnly: true
+          description: Last modification time
+        protection_level:
+          enum: [1, 2, 3]
+          type: integer
+          description: API visibility level for this object
+        code:
+          type: string
+          nullable: true
+          maxLength: 100
+          description: Unique identification code for observation
+      required:
+      - feature
+      - species
+      - abundance
+      - frequency
+      - migration_class
+      - origin
+      - breeding_degree
+
+    Abundance:
+      type: object
+      description: Abudance information for species observataion
+        #TODO Check this description
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          description: Database ID for this object
+        url:
+          type: string
+          readOnly: true
+          description: Direct URL to abundance object
+        value:
+          type: string
+          nullable: true
+          maxLength: 5
+          description: Short numeral description of abundance
+            #TODO This needs some more explanation
+        explanation:
+          type: string
+          nullable: true
+          maxLength: 50
+          description: Short textual description of abundance
+            #TODO This needs some more explanation
+        source:
+          type: string
+          nullable: true
+          maxLength: 50
+          description: Source for abundance definition ie. person or publication name
+
+    BreedingDegree:
+      type: object
+      description: Breeding degree information for species
+        #TODO Check this description
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          description: Database ID for this object
+        url:
+          type: string
+          readOnly: true
+          description: Direct API URL to this object
+        value:
+          type: string
+          nullable: true
+          maxLength: 50
+          description: Values 1-8
+            #TODO This needs some more explanation
+        explanation:
+          type: string
+          nullable: true
+          maxLength: 50
+          description: Short description of breeding degree type
+            #TODO This needs some more explanation
+        source:
+          type: string
+          nullable: true
+          maxLength: 50
+          description: Source for breeding degree definition ie. person or publication
+
+    Frequency:
+      type: object
+      description: Observation frequency
+        #TODO Check this description
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          description: Database ID for this object
+        url:
+          type: string
+          readOnly: true
+          description: Direct API URL to this object
+        value:
+          type: string
+          nullable: true
+          maxLength: 5
+          description: ie. 1-5 or 100%
+            #TODO Check this explanation
+        explanation:
+          type: string
+          nullable: true
+          maxLength: 50
+          description: Explanation for frequency classification
+        source:
+          type: string
+          nullable: true
+          maxLength: 50
+          description: Source for frequency classification
+
+    Species:
+      type: object
+      description: |-
+          Species information
+          #TODO Create a description for this
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          description: Database ID for this object
+        url:
+          type: string
+          readOnly: true
+          description: Direct API URL to this object
+        taxon:
+          type: string
+          nullable: true
+          maxLength: 5
+          description: Highest classification. plant, mushroom, animal
+        taxon_1:
+          type: string
+          nullable: true
+          maxLength: 50
+          description: More in depth classification for taxon
+        taxon_2:
+          type: string
+          nullable: true
+          maxLength: 50
+          description: More in-depth taxon classification
+        name_fi:
+          type: string
+          nullable: true
+          maxLength: 150
+          description: Finnish taxon, subspecies or other name
+        name_fi_2:
+          type: string
+          nullable: true
+          maxLength: 150
+          description: Secondary Finnish species name
+        name_sci_1:
+          type: string
+          nullable: true
+          maxLength: 150
+          description: Scientific taxon, sub species or other name
+        name_subspecies_1:
+          type: string
+          nullable: true
+          maxLength: 150
+          description: Subspecies name
+        registry_date:
+          type: string
+          format: date-time
+          nullable: true
+          description: Date and time for species registration
+        regulations:
+          type: array
+          items:
+            type: string
+          readOnly: true
+          description: List of API URLs to regulation objects
+        name_sv:
+          type: string
+          nullable: true
+          maxLength: 150
+          description: Swedish species name
+        protection_level:
+          enum: [1, 2, 3]
+          type: integer
+          description: API visibility level for this object
+        additional_info:
+          type: string
+          nullable: true
+          maxLength: 255
+          description: Additional information ei. about previous namin information
+        link:
+          type: string
+          nullable: true
+          maxLength: 4000
+          description: Link for image or web page about species
+        name_en:
+          type: string
+          nullable: true
+          maxLength: 150
+          description: Englis name fro species
+        observations:
+          type: array
+          items:
+            type: string
+          description: List of API URLs for observation objects
+        code:
+          type: string
+          nullable: true
+          maxLength: 100
+          description: 2016, MX-code from lajitietokeskus
+            #TODO Needs better description
+      required:
+      - observations
+
+    LinkType:
+      type: object
+      description: Type information for feature link
+        #TODO Check this description
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          description: Database ID for this object
+        url:
+          type: string
+          readOnly: true
+          description: Direct API URL to this object
+        name:
+          type: string
+          nullable: true
+          maxLength: 20
+          description: Short link type description ei. image link or PDF
+
+    MigrationClass:
+      type: object
+      description: Migration information for observation
+        #TODO Check this description
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          description: Database ID for this object
+        url:
+          type: string
+          readOnly: true
+          description: Direct API URL to this object
+        value:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          description: Value ie. 1-3
+        explanation:
+          type: string
+          nullable: true
+          maxLength: 50
+          description: Small description
+        source:
+          type: string
+          nullable: true
+          maxLength: 50
+          description: Document from where this classification is from or person who did the classification
+
+    Occurrence:
+      type: object
+      description: Observation occurance
+        #TODO Check this description
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          description: Database ID for this object
+        url:
+          type: string
+          readOnly: true
+          description: Direct API URL to this object
+        explanation:
+          type: string
+          nullable: true
+          maxLength: 50
+          description: Small description
+
+    ObservationSeries:
+      type: object
+      description: |-
+          Observation series information
+          #TODO Check this description
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          description: Database ID for this object
+        url:
+          type: string
+          readOnly: true
+          description: Direct API URL to this object
+        name:
+          type: string
+          nullable: true
+          maxLength: 50
+          description: Name for observation series. Tells what study group these observations are part of
+        description:
+          type: string
+          nullable: true
+          maxLength: 255
+          description: Small description for observation series
+        start_date:
+          type: string
+          format: date
+          nullable: true
+          description: Start date
+        end_date:
+          type: string
+          format: date
+          nullable: true
+          description: End date
+        method:
+          type: string
+          nullable: true
+          maxLength: 255
+          description: Method used for observations
+            #TODO Check this description
+        notes:
+          type: string
+          nullable: true
+          maxLength: 255
+          description: Notes ie. partial parts of observations
+        additional_info:
+          type: string
+          nullable: true
+          maxLength: 255
+          description: Additional information about series
+        valid:
+          type: boolean
+          description: Is the observation series valid
+            #TODO Check this description
+        observations:
+          type: array
+          items:
+            type: string
+          description: List of API URLs for observation objects in this series
+        habitat_type_observations:
+          type: array
+          items:
+            type: string
+          description: List of API URLs for habitat type observation objects in this series
+      required:
+      - valid
+      - observations
+      - habitat_type_observations
+
+    HabitatType:
+      type: object
+      description: |-
+          Habitat type register
+          #TODO Check this description
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          description: Database ID for this object
+        url:
+          type: string
+          readOnly: true
+          description: Direct API URL to this object
+        name:
+          type: string
+          nullable: true
+          maxLength: 50
+          description: Name for habitat type
+        code:
+          type: string
+          nullable: true
+          maxLength: 10
+          description: Habitat type code ei. m2 or 9050
+        description:
+          type: string
+          nullable: true
+          maxLength: 255
+          description: Small description of habitat type
+        additional_info:
+          type: string
+          nullable: true
+          maxLength: 255
+          description: Additional information
+        group:
+          type: string
+          nullable: true
+          maxLength: 50
+          description: In what group this habitat type belongs to
+        regulations:
+          type: array
+          items:
+            type: string
+          readOnly: true
+          description: List of API URLs for regulation objects related to this habitat type
+        habitat_type_observations:
+          type: array
+          items:
+            type: string
+          description: List of API URLs for observation objects
+      required:
+      - habitat_type_observations
+
+    HabitatTypeObservation:
+      type: object
+      description: |-
+          Habitat type observation
+          #TODO Check this description
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          description: Database ID for this object
+        url:
+          type: string
+          readOnly: true
+          description: Direct API URL to this object
+        feature:
+          type: string
+          description: API URL to related feature object
+        habitat_type:
+          type: string
+          description: API URL to related habitat type object
+        group_fraction:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          description: Percentual share for this habitat of shape
+            #TODO Check this description: what is the shape?
+        additional_info:
+          type: string
+          nullable: true
+          maxLength: 255
+          description: Additional information
+        observation_series:
+          type: string
+          description: API URL to related observation series object
+        created_time:
+          type: string
+          format: date-time
+          readOnly: true
+          description: Automatic date and time for this object
+        last_modified_time:
+          type: string
+          format: date-time
+          readOnly: true
+          description: Automatic editing date and time for this object
+      required:
+      - feature
+      - habitat_type
+      - observation_series
+
+    HabitatTypeRegulation:
+      type: object
+      description: Connection table for habitat type and regulation
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          description: Database ID for this object
+        url:
+          type: string
+          readOnly: true
+          description: Direct API URL to this object
+        habitat_type:
+          type: string
+          description: API URL to habitat type object
+        regulation:
+          type: string
+          description: API URL to regulation object
+      required:
+      - habitat_type
+      - regulation
+
+    Publication:
+      type: object
+      description: |-
+          Publication information
+          #TODO Check this description
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          description: Database ID for this object
+        url:
+          type: string
+          readOnly: true
+          description: Direct API URL to this object
+        publication_type:
+          type: string
+          readOnly: true
+          description: Publication type
+        name:
+          type: string
+          nullable: true
+          maxLength: 150
+          description: Publication name
+        author:
+          type: string
+          nullable: true
+          maxLength: 100
+          description: Publication creator or creators
+        series:
+          type: string
+          nullable: true
+          maxLength: 100
+          description: Series where this publication was published
+        place_of_printing:
+          type: string
+          nullable: true
+          maxLength: 50
+          description: Place of printing
+        year:
+          type: string
+          nullable: true
+          maxLength: 50
+          description: Publication year or years
+        additional_info:
+          type: string
+          nullable: true
+          maxLength: 255
+          description: Additional information
+        link:
+          type: string
+          nullable: true
+          maxLength: 4000
+          description: Link to publication or related document
+        features:
+          type: array
+          items:
+            type: string
+          readOnly: true
+          description: API URLs to related feature objects
+
+    PublicationType:
+      type: object
+      description: Publication type information
+        #TODO Check this description
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          description: Database ID for this object
+        url:
+          type: string
+          readOnly: true
+          description: Direct API URL to this object
+        name:
+          type: string
+          nullable: true
+          maxLength: 20
+          description: Publication type
+
+    Protection:
+      type: object
+      description: |-
+          Protection information for feature
+          #TODO Check this description
+      properties:
+        url:
+          type: string
+          readOnly: true
+          description: API URL to this protection object
+        reported_area:
+          type: string
+          nullable: true
+          maxLength: 50
+          description: Size for reported area
+            #TODO What unit is this in
+        land_area:
+          type: string
+          nullable: true
+          maxLength: 50
+          description: Size of land area
+            #TODO What unit is this in
+        water_area:
+          type: string
+          nullable: true
+          maxLength: 50
+          description: Size of water area
+            #TODO What unit is this in
+        hiking:
+          type: string
+          nullable: true
+          maxLength: 255
+          description: Small description of hiking and other outdoor activity possibilities
+            #TODO Check this
+        regulations:
+          type: string
+          nullable: true
+          maxLength: 255
+          description: Short text description of regulations concerning this feature
+        additional_info:
+          type: string
+          nullable: true
+          maxLength: 255
+          description: Extra information about feature protection
+        criteria:
+          type: array
+          items:
+            type: string
+          readOnly: true
+          description: List of API URLs to protection criteria object
+        conservation_programmes:
+          type: array
+          items:
+            type: string
+          readOnly: true
+          description: List of API URLs to conservation programmes for this protection type
+            #TODO Check this description
+        feature:
+          type: string
+          description: API URL to protected feature
+      required:
+      - feature
+
+    Regulation:
+      type: object
+      description: |-
+          Ragulation information concerning species
+          #TODO Check this description
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          description: Database ID for this object
+        url:
+          type: string
+          readOnly: true
+          description: Direct API URL to this object
+        name:
+          type: string
+          nullable: true
+          maxLength: 255
+          description: Regulation name
+        paragraph:
+          type: string
+          nullable: true
+          maxLength: 100
+          description: Paragraph or liite(?)
+            #TODO Check this description. What is liite in English in this concept?
+        additional_info:
+          type: string
+          nullable: true
+          maxLength: 255
+          description: Additional info. Free form text field
+        value:
+          type: string
+          nullable: true
+          maxLength: 10
+          description: ie. UICN-class
+            #TODO Check this description
+        value_explanation:
+          type: string
+          nullable: true
+          maxLength: 255
+          description: Explanation for value field
+        valid:
+          type: boolean
+          description: Is this regulation active
+        date_of_entry:
+          type: string
+          format: date-time
+          nullable: true
+          description: Official activation date and time for this regulation
+        link:
+          type: string
+          nullable: true
+          maxLength: 4000
+          description: Link to regulation or regulation collection
+        species:
+          type: array
+          items:
+            type: string
+          readOnly: true
+          description: List of API URLs to regulated species objects
+        transactions:
+          type: array
+          items:
+            type: string
+          readOnly: true
+          description: List of API URLs for transaction object concerning this regulation
+        habitat_types:
+          type: array
+          items:
+            type: string
+          readOnly: true
+          description: List of API URLs for regulated habitat types
+      required:
+      - valid
+
+    Transaction:
+      type: object
+      description: |-
+          Information about changes for regulations or protection concerning natural features or areas
+          #TODO Check this description
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          description: Database ID for this object
+        url:
+          type: string
+          readOnly: true
+          description: Direct API URL to this object
+        register_id:
+          type: string
+          nullable: true
+          maxLength: 20
+          description: Journal number given by Centre for Environment
+            #TODO Document says these are IDs given by luontokeskus
+        description:
+          type: string
+          nullable: true
+          maxLength: 255
+          description: Description of transaction
+        transaction_type:
+          $ref: '#/components/schemas/TransactionType'
+        date:
+          type: string
+          format: date
+          nullable: true
+          description: Transaction date
+        link:
+          type: string
+          nullable: true
+          maxLength: 4000
+          description: Link to transaction document
+            #TODO Check this. Field description does not have any information about this field
+        features:
+          type: array
+          items:
+            type: string
+          readOnly: true
+          description: List of API URLs for related feature objects
+        regulations:
+          type: array
+          items:
+            type: string
+          readOnly: true
+          description: List of API URLs for related regulation objects
+      required:
+      - transaction_type
+
+    TransactionType:
+      type: object
+      description: Type information for transaction
+        #TODO Check this description
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          description: Database ID for this object
+        url:
+          type: string
+          readOnly: true
+          description: Direct API URL to this object
+        name:
+          type: string
+          nullable: true
+          maxLength: 20
+          description: Small description of transaction type
+        transactions:
+          type: array
+          items:
+            type: string
+          description: List of API URLs for transaction objects
+      required:
+      - transactions
+
+    TransactionFeature:
+      type: object
+      description: Connection table for features and transactions
+        #TODO Check this description
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          description: Database ID for this object
+        url:
+          type: string
+          readOnly: true
+          description: Direct API URL to this object
+        feature:
+          type: string
+          description: API URL to feature object
+        transaction:
+          type: string
+          description: API URL to transaction object
+      required:
+      - feature
+      - transaction
+
+    Criterion:
+      type: object
+      description: |-
+          Description of protection criterion
+          #TODO Check this description
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          description: Database ID for this object
+        url:
+          type: string
+          readOnly: true
+          description: Direct API URL to this object
+        criterion:
+          type: string
+          nullable: true
+          maxLength: 50
+          description: High level reason for protection
+        specific_criterion:
+          type: string
+          nullable: true
+          maxLength: 50
+          description: More in detail reason for protection
+        subcriterion:
+          type: string
+          nullable: true
+          maxLength: 50
+          description: More detailed reason for protection
+        protected_features:
+          type: array
+          items:
+            type: string
+          description: List of API URLs to related feature objects
+      required:
+      - protected_features
+
+    ProtectionConservationProgramme:
+      type: object
+      description: Connection table for protection and conservation program
+        #TODO Check this description
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          description: Database ID for this object
+        url:
+          type: string
+          readOnly: true
+          description: Direct URL to this object
+        protection:
+          type: string
+          description: API URL for protection object
+        conservation_programme:
+          type: string
+          description: API URL for conservation program object
+      required:
+      - protection
+      - conservation_programme
+
+    ConservationProgramme:
+      type: object
+      description: |-
+          Conservation program description for protection
+          #TODO Check this description
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          description: Database ID for this object
+        url:
+          type: string
+          readOnly: true
+          description: Direct URL to this object
+        name:
+          type: string
+          nullable: true
+          maxLength: 20
+          description: Conservation program name
+        protected_features:
+          type: array
+          items:
+            type: string
+          description: List of API URLs to feature objects under this program
+      required:
+      - protected_features
+
+    Origin:
+      type: object
+      description: Species observation origin information
+        #TODO Check this description
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          description: Database ID for this object
+        url:
+          type: string
+          readOnly: true
+          description: Direct URL to this object
+        explanation:
+          type: string
+          nullable: true
+          maxLength: 50
+          description: Small descriotion for origin
+        source:
+          type: string
+          nullable: true
+          maxLength: 50
+          description: Information about who's classification is used here. May include publication references
+
+    SpeciesRegulation:
+      type: object
+      description: Connection table for species register and regulation
+        #TODO Check this description
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          description: Database ID for this object
+        url:
+          type: string
+          readOnly: true
+          description: Direct URL to this object
+        species:
+          type: string
+          description: API URL to species object
+        regulation:
+          type: string
+          description: API URL to regulation object
+      required:
+      - species
+      - regulation
+
+    Square:
+      type: object
+      description: Square
+        #TODO This needs a description
+      properties:
+        url:
+          type: string
+          readOnly: true
+          description: API url for square object
+        number:
+          type: string
+          nullable: true
+          maxLength: 10
+          description: Square number
+            #TODO Needs more clarification
+        degree_of_determination:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          description: Values ie. from 1 to 5
+            #TODO This needs clarification: arvon selitys määritellään aineistokuvauksessa
+        additional_info:
+          type: string
+          nullable: true
+          maxLength: 255
+          description: Additional information about suqare
+        feature:
+          type: string
+          description: URL to related feature
+      required:
+      - feature
+
