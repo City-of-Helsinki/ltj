@@ -26,7 +26,7 @@ oauthlib==3.1.0           # via requests-oauthlib, social-auth-core
 psycopg2==2.8.6           # via -r requirements.in
 pyasn1==0.4.8             # via python-jose, rsa
 pycparser==2.20           # via cffi
-pycryptodomex==3.9.8      # via pyjwkest
+pycryptodomex==3.19.1      # via pyjwkest
 pyjwkest==1.4.2           # via drf-oidc-auth
 pyjwt==2.4.0             # via social-auth-core
 pyshp==2.1.2              # via -r requirements.in
