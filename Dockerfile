@@ -17,6 +17,7 @@ RUN apt-get update \
         zsh \
     && echo '%sudo ALL=(ALL:ALL) NOPASSWD: ALL' > /etc/sudoers.d/sudo_nopasswd \
     && apt-get install --yes --no-install-recommends \
+        gdal-bin \
         python3 \
         python3-venv \
         python3-psycopg2
