@@ -1,0 +1,30 @@
+# -*- coding: utf-8 -*-
+# Very simple local settings to use in vanilla docker env
+
+from ltj.settings import *
+
+DEBUG = True
+
+SECRET_KEY = 'sekrit'
+
+SITE_ID = 1
+ALLOWED_HOSTS = ['*']
+
+DATABASES = {
+  'default': {
+    'ENGINE': 'django.contrib.gis.db.backends.postgis',
+    'HOST': 'postgis',
+    'PORT': '5432',
+    'NAME': 'ltj',
+    'USER': 'ltj',
+    'PASSWORD': 'luontotieto',
+    'OPTIONS': {'sslmode': 'disable', },
+    'ATOMIC_REQUESTS': True,
+  }
+}
+
+SECURE_SSL_REDIRECT = False
+
+SHARED_SECRET="secret"
+
+# vim: tabstop=2 expandtab shiftwidth=2 softtabstop=2
