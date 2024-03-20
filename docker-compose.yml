@@ -43,6 +43,7 @@ services:
       - POSTGRES_DB=ltj
       - LANG=fi_FI.UTF-8
     volumes:
+      - ./postgis-initdb:/docker-entrypoint-initdb.d
       - postgis:/var/lib/postgis/data
     ports:
       - 5432
