@@ -3,7 +3,7 @@ djangorestframework
 djangorestframework-gis
 django-ckeditor
 django-environ
-psycopg2
+psycopg2==2.7.4
 sentry-sdk
 requests
 pyshp
