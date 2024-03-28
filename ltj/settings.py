@@ -1,9 +1,7 @@
 import os
 import environ
-import sentry_sdk
 import subprocess
 from helusers.defaults import SOCIAL_AUTH_PIPELINE  # noqa: F401
-from sentry_sdk.integrations.django import DjangoIntegration
 
 root = environ.Path(__file__) - 2
 BASE_DIR = root()
@@ -123,15 +121,6 @@ INSTALLED_APPS = [
     "users",
     "hmac_auth",
 ]
-
-# Sentry
-if env("SENTRY_DSN"):
-    sentry_sdk.init(
-        dsn=env("SENTRY_DSN"),
-        environment=env("SENTRY_ENVIRONMENT"),
-        release=get_git_revision_hash(),
-        integrations=[DjangoIntegration()],
-    )
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
