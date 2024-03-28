@@ -1,4 +1,4 @@
-FROM ubuntu:bionic-20190515
+FROM ubuntu:jammy-20231004
 
 ENV USER=root DEBIAN_FRONTEND=noninteractive
 VOLUME ["/var/cache/apt/archives"]
@@ -39,8 +39,8 @@ WORKDIR /home/bew/bew
 
 COPY --chown=bew:bew . /home/bew/bew/
 
-RUN python3.6 -m venv --system-site-packages /home/bew/.venv
+RUN python3.10 -m venv --system-site-packages /home/bew/.venv
 RUN /home/bew/.venv/bin/pip3 install -r /home/bew/bew/requirements.txt
-RUN /home/bew/.venv/bin/pip3 install -r /home/bew/bew/requirements-dev.txt
+#RUN /home/bew/.venv/bin/pip3 install -r /home/bew/bew/requirements-dev.txt
 
 CMD /bin/zsh
