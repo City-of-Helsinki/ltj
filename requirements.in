@@ -10,3 +10,4 @@ pyshp
 django-helusers==0.11.*
 social-auth-app-django
 django-axes
+pytz
