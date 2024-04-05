@@ -226,3 +226,5 @@ SRID = 3879  # Spatial reference system identifier used for geometry fields
 
 WFS_SERVER_URL = env("WFS_SERVER_URL")  # WFS server url for features
 WFS_NAMESPACE = env("WFS_NAMESPACE")  # Namespace for WFS layers
+
+DEFAULT_AUTO_FIELD='django.db.models.AutoField'
