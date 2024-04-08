@@ -34,6 +34,7 @@ python3-openid==3.2.0
 requests==2.31.0
 requests-oauthlib==2.0.0
 rsa==4.9
+sentry_sdk==1.44.1
 six==1.16.0
 social-auth-app-django==5.4.0
 social-auth-core==4.5.3
