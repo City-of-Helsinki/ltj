@@ -28,7 +28,7 @@ pathspec==0.12.1           # via black
 pexpect==4.8.0            # via ipython
 pickleshare==0.7.5        # via ipython
 platformdirs==2.4.0       # via black
-pluggy==0.13.1            # via pytest
+pluggy==1.4.0            # via pytest
 prompt-toolkit==3.0.43    # via ipython
 ptyprocess==0.6.0         # via pexpect
 py==1.10.0                # via pytest
@@ -38,7 +38,7 @@ pygments==2.17.2           # via ipython
 pyparsing==2.4.7          # via packaging
 pytest-cov==2.10.1        # via -r requirements-dev.in
 pytest-django==3.10.0     # via -r requirements-dev.in
-pytest==6.1.1             # via -r requirements-dev.in, pytest-cov, pytest-django
+pytest==8.1.1             # via -r requirements-dev.in, pytest-cov, pytest-django
 python-dateutil==2.8.1    # via faker, freezegun
 regex==2023.12.25          # via black
 six==1.16.0               # via packaging, python-dateutil, traitlets
