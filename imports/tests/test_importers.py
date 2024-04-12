@@ -117,7 +117,7 @@ class TestShapefilesImporter(TestCase):
     )
     def test_import(self):
         # make sure only feature 1 exist before importing
-        self.assertQuerysetEqual(Feature.objects.all(), [repr(self.feature_to_update)])
+        self.assertQuerysetEqual(Feature.objects.all(), [(self.feature_to_update)])
         ShapefileImporter.import_features("dummy-shapefiles.zip")
         # verify new feature created
         self.assertEqual(Feature.objects.count(), 2)
