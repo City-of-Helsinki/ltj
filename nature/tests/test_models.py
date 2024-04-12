@@ -73,7 +73,7 @@ class ProtectionLevelQuerySet(TestCase):
             (self.feature_office),
             (self.feature_public),
         ]
-        self.assertQuerysetEqual(qs, expected_queryset, ordered=False)
+        self.assertQuerySetEqual(qs, expected_queryset, ordered=False)
 
     def test_for_office(self):
         qs = Feature.objects.for_office()
