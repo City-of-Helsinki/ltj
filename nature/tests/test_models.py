@@ -78,19 +78,19 @@ class ProtectionLevelQuerySet(TestCase):
     def test_for_office(self):
         qs = Feature.objects.for_office()
         expected_queryset = [
-            repr(self.feature_office),
-            repr(self.feature_public),
+            (self.feature_office),
+            (self.feature_public),
         ]
         self.assertQuerysetEqual(qs, expected_queryset, ordered=False)
 
     def test_for_public(self):
         qs = Feature.objects.for_public()
-        expected_queryset = [repr(self.feature_public)]
+        expected_queryset = [(self.feature_public)]
         self.assertQuerysetEqual(qs, expected_queryset, ordered=False)
 
     def test_open_data(self):
         qs = Feature.objects.open_data()
-        expected_queryset = [repr(self.feature_public)]
+        expected_queryset = [(self.feature_public)]
         self.assertQuerysetEqual(qs, expected_queryset, ordered=False)
 
 
@@ -135,39 +135,39 @@ class TestFeatureQuerySet(TestCase):
     def test_for_office_hki(self):
         qs = Feature.objects.for_office_hki()
         expected_queryset = [
-            repr(self.feature_office_hki),
-            repr(self.feature_office),
-            repr(self.feature_public),
-            repr(self.feature_public_open_data),
-            repr(self.feature_public_www),
-            repr(self.feature_public_open_www),
+            (self.feature_office_hki),
+            (self.feature_office),
+            (self.feature_public),
+            (self.feature_public_open_data),
+            (self.feature_public_www),
+            (self.feature_public_open_www),
         ]
         self.assertQuerysetEqual(qs, expected_queryset, ordered=False)
 
     def test_for_office(self):
         qs = Feature.objects.for_office()
         expected_queryset = [
-            repr(self.feature_office),
-            repr(self.feature_public),
-            repr(self.feature_public_open_data),
-            repr(self.feature_public_www),
-            repr(self.feature_public_open_www),
+            (self.feature_office),
+            (self.feature_public),
+            (self.feature_public_open_data),
+            (self.feature_public_www),
+            (self.feature_public_open_www),
         ]
         self.assertQuerysetEqual(qs, expected_queryset, ordered=False)
 
     def test_open_data(self):
         qs = Feature.objects.open_data()
         expected_queryset = [
-            repr(self.feature_public_open_data),
-            repr(self.feature_public_open_www),
+            (self.feature_public_open_data),
+            (self.feature_public_open_www),
         ]
         self.assertQuerysetEqual(qs, expected_queryset, ordered=False)
 
     def test_www(self):
         qs = Feature.objects.www()
         expected_queryset = [
-            repr(self.feature_public_www),
-            repr(self.feature_public_open_www),
+            (self.feature_public_www),
+            (self.feature_public_open_www),
         ]
         self.assertQuerysetEqual(qs, expected_queryset, ordered=False)
 
@@ -228,62 +228,62 @@ class TestFeatureRelatedQuerySet(TestCase):
     def test_for_admin(self):
         qs = FeatureValue.objects.for_admin()
         expected_queryset = [
-            repr(self.feature_value_admin),
-            repr(self.feature_value_office_hki),
-            repr(self.feature_value_office),
-            repr(self.feature_value_public),
-            repr(self.feature_value_public_open_data),
-            repr(self.feature_value_www),
-            repr(self.feature_value_open_www),
+            (self.feature_value_admin),
+            (self.feature_value_office_hki),
+            (self.feature_value_office),
+            (self.feature_value_public),
+            (self.feature_value_public_open_data),
+            (self.feature_value_www),
+            (self.feature_value_open_www),
         ]
         self.assertQuerysetEqual(qs, expected_queryset, ordered=False)
 
     def test_for_office_hki(self):
         qs = FeatureValue.objects.for_office_hki()
         expected_queryset = [
-            repr(self.feature_value_office_hki),
-            repr(self.feature_value_office),
-            repr(self.feature_value_public),
-            repr(self.feature_value_public_open_data),
-            repr(self.feature_value_www),
-            repr(self.feature_value_open_www),
+            (self.feature_value_office_hki),
+            (self.feature_value_office),
+            (self.feature_value_public),
+            (self.feature_value_public_open_data),
+            (self.feature_value_www),
+            (self.feature_value_open_www),
         ]
         self.assertQuerysetEqual(qs, expected_queryset, ordered=False)
 
     def test_for_office(self):
         qs = FeatureValue.objects.for_office()
         expected_queryset = [
-            repr(self.feature_value_office),
-            repr(self.feature_value_public),
-            repr(self.feature_value_public_open_data),
-            repr(self.feature_value_www),
-            repr(self.feature_value_open_www),
+            (self.feature_value_office),
+            (self.feature_value_public),
+            (self.feature_value_public_open_data),
+            (self.feature_value_www),
+            (self.feature_value_open_www),
         ]
         self.assertQuerysetEqual(qs, expected_queryset, ordered=False)
 
     def test_for_public(self):
         qs = FeatureValue.objects.for_public()
         expected_queryset = [
-            repr(self.feature_value_public),
-            repr(self.feature_value_public_open_data),
-            repr(self.feature_value_www),
-            repr(self.feature_value_open_www),
+            (self.feature_value_public),
+            (self.feature_value_public_open_data),
+            (self.feature_value_www),
+            (self.feature_value_open_www),
         ]
         self.assertQuerysetEqual(qs, expected_queryset, ordered=False)
 
     def test_open_data(self):
         qs = FeatureValue.objects.open_data()
         expected_queryset = [
-            repr(self.feature_value_public_open_data),
-            repr(self.feature_value_open_www),
+            (self.feature_value_public_open_data),
+            (self.feature_value_open_www),
         ]
         self.assertQuerysetEqual(qs, expected_queryset, ordered=False)
 
     def test_www(self):
         qs = FeatureValue.objects.www()
         expected_queryset = [
-            repr(self.feature_value_www),
-            repr(self.feature_value_open_www),
+            (self.feature_value_www),
+            (self.feature_value_open_www),
         ]
         self.assertQuerysetEqual(qs, expected_queryset, ordered=False)
 
@@ -368,46 +368,46 @@ class TestFeatureRelatedProtectionLevelQuerySet(TestCase):
     def test_for_office_hki(self):
         qs = Observation.objects.for_office_hki()
         expected_queryset = [
-            repr(self.observation_office_feature_office_hki),
-            repr(self.observation_office_feature_office),
-            repr(self.observation_public_feature_office),
-            repr(self.observation_public_feature_public),
-            repr(self.observation_public_feature_public_open_data),
-            repr(self.observation_public_feature_public_www),
+            (self.observation_office_feature_office_hki),
+            (self.observation_office_feature_office),
+            (self.observation_public_feature_office),
+            (self.observation_public_feature_public),
+            (self.observation_public_feature_public_open_data),
+            (self.observation_public_feature_public_www),
         ]
         self.assertQuerysetEqual(qs, expected_queryset, ordered=False)
 
     def test_for_office(self):
         qs = Observation.objects.for_office()
         expected_queryset = [
-            repr(self.observation_office_feature_office),
-            repr(self.observation_public_feature_office),
-            repr(self.observation_public_feature_public),
-            repr(self.observation_public_feature_public_open_data),
-            repr(self.observation_public_feature_public_www),
+            (self.observation_office_feature_office),
+            (self.observation_public_feature_office),
+            (self.observation_public_feature_public),
+            (self.observation_public_feature_public_open_data),
+            (self.observation_public_feature_public_www),
         ]
         self.assertQuerysetEqual(qs, expected_queryset, ordered=False)
 
     def test_for_public(self):
         qs = Observation.objects.for_public()
         expected_queryset = [
-            repr(self.observation_public_feature_public),
-            repr(self.observation_public_feature_public_open_data),
-            repr(self.observation_public_feature_public_www),
+            (self.observation_public_feature_public),
+            (self.observation_public_feature_public_open_data),
+            (self.observation_public_feature_public_www),
         ]
         self.assertQuerysetEqual(qs, expected_queryset, ordered=False)
 
     def test_open_data(self):
         qs = Observation.objects.open_data()
         expected_queryset = [
-            repr(self.observation_public_feature_public_open_data),
+            (self.observation_public_feature_public_open_data),
         ]
         self.assertQuerysetEqual(qs, expected_queryset, ordered=False)
 
     def test_www(self):
         qs = Observation.objects.www()
         expected_queryset = [
-            repr(self.observation_public_feature_public_www),
+            (self.observation_public_feature_public_www),
         ]
         self.assertQuerysetEqual(qs, expected_queryset, ordered=False)
 
