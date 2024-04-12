@@ -53,7 +53,7 @@ class TestFeatureClassQuerySet(TestCase):
 
     def test_open_data(self):
         qs = FeatureClass.objects.open_data()
-        self.assertQuerysetEqual(qs, [(self.feature_class_open_data)])
+        self.assertQuerySetEqual(qs, [(self.feature_class_open_data)])
 
 
 class ProtectionLevelQuerySet(TestCase):
@@ -69,9 +69,9 @@ class ProtectionLevelQuerySet(TestCase):
     def test_for_admin(self):
         qs = Feature.objects.for_admin()
         expected_queryset = [
-            repr(self.feature_admin),
-            repr(self.feature_office),
-            repr(self.feature_public),
+            (self.feature_admin),
+            (self.feature_office),
+            (self.feature_public),
         ]
         self.assertQuerysetEqual(qs, expected_queryset, ordered=False)
 
