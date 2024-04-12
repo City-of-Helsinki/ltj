@@ -53,7 +53,7 @@ class TestFeatureClassQuerySet(TestCase):
 
     def test_open_data(self):
         qs = FeatureClass.objects.open_data()
-        self.assertQuerysetEqual(qs, [repr(self.feature_class_open_data)])
+        self.assertQuerysetEqual(qs, [(self.feature_class_open_data)])
 
 
 class ProtectionLevelQuerySet(TestCase):
