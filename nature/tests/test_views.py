@@ -486,9 +486,9 @@ class TestFeatureObservationsReportView(TestCase):
         self.assertQuerysetEqual(
             context["observations"],
             [
-                repr(self.observation_admin),
-                repr(self.observation_office),
-                repr(self.observation_www),
+                (self.observation_admin),
+                (self.observation_office),
+                (self.observation_www),
             ],
             ordered=False,
         )
