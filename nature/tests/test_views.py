@@ -533,7 +533,7 @@ class TestFeatureObservationsReportView(TestCase):
         context = view.get_context_data()
         self.assertQuerysetEqual(
             context["observations"],
-            [repr(self.observation_office), repr(self.observation_www)],
+            [(self.observation_office), (self.observation_www)],
             ordered=False,
         )
         self.assertEqual(context["secret_observation_count"], 1)
