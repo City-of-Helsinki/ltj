@@ -67,7 +67,7 @@ class TestFeatureReportHMACAuth(TestCase):
         response = self.client.get(url, **headers)
         self.assertEqual(response.status_code, 200)
         self.assertIn(
-            "<title>Kohderaportti - Admin</title>".encode("utf-8"), response.content
+            "<title>Feature Report - Admin</title>".encode("utf-8"), response.content
         )
 
         url = reverse(
@@ -76,21 +76,21 @@ class TestFeatureReportHMACAuth(TestCase):
         response = self.client.get(url, **headers)
         self.assertEqual(response.status_code, 200)
         self.assertIn(
-            "<title>Kohderaportti - Admin</title>".encode("utf-8"), response.content
+            "<title>Feature Report - Admin</title>".encode("utf-8"), response.content
         )
 
         url = reverse("nature:feature-report", kwargs={"pk": self.feature_office.id})
         response = self.client.get(url, **headers)
         self.assertEqual(response.status_code, 200)
         self.assertIn(
-            "<title>Kohderaportti - Admin</title>".encode("utf-8"), response.content
+            "<title>Feature Report - Admin</title>".encode("utf-8"), response.content
         )
 
         url = reverse("nature:feature-report", kwargs={"pk": self.feature_public.id})
         response = self.client.get(url, **headers)
         self.assertEqual(response.status_code, 200)
         self.assertIn(
-            "<title>Kohderaportti - Admin</title>".encode("utf-8"), response.content
+            "<title>Feature Report - Admin</title>".encode("utf-8"), response.content
         )
 
     @freeze_time("2019-01-17 12:00:00")
