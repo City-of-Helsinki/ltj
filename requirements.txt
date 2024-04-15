@@ -21,7 +21,7 @@ djangorestframework==3.12.1  # via -r requirements.in, djangorestframework-gis, 
 drf-oidc-auth==0.10.0     # via django-helusers
 ecdsa==0.14.1             # via python-jose
 future==0.18.2            # via pyjwkest
-idna==2.10                # via requests
+idna==3.7                # via requests
 oauthlib==3.1.0           # via requests-oauthlib, social-auth-core
 psycopg2==2.8.6           # via -r requirements.in
 pyasn1==0.4.8             # via python-jose, rsa
