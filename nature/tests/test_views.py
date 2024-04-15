@@ -420,7 +420,7 @@ class TestSpeciesReportView(TestCase):
         view.object = self.species
 
         context = view.get_context_data()
-        self.assertQuerysetEqual(
+        self.assertQuerySetEqual(
             context["observations"],
             [(self.observation_office), (self.observation_www)],
             ordered=False,
