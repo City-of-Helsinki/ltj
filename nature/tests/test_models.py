@@ -81,17 +81,17 @@ class ProtectionLevelQuerySet(TestCase):
             (self.feature_office),
             (self.feature_public),
         ]
-        self.assertQuerysetEqual(qs, expected_queryset, ordered=False)
+        self.assertQuerySetEqual(qs, expected_queryset, ordered=False)
 
     def test_for_public(self):
         qs = Feature.objects.for_public()
         expected_queryset = [(self.feature_public)]
-        self.assertQuerysetEqual(qs, expected_queryset, ordered=False)
+        self.assertQuerySetEqual(qs, expected_queryset, ordered=False)
 
     def test_open_data(self):
         qs = Feature.objects.open_data()
         expected_queryset = [(self.feature_public)]
-        self.assertQuerysetEqual(qs, expected_queryset, ordered=False)
+        self.assertQuerySetEqual(qs, expected_queryset, ordered=False)
 
 
 class TestFeatureQuerySet(TestCase):
@@ -142,7 +142,7 @@ class TestFeatureQuerySet(TestCase):
             (self.feature_public_www),
             (self.feature_public_open_www),
         ]
-        self.assertQuerysetEqual(qs, expected_queryset, ordered=False)
+        self.assertQuerySetEqual(qs, expected_queryset, ordered=False)
 
     def test_for_office(self):
         qs = Feature.objects.for_office()
@@ -153,7 +153,7 @@ class TestFeatureQuerySet(TestCase):
             (self.feature_public_www),
             (self.feature_public_open_www),
         ]
-        self.assertQuerysetEqual(qs, expected_queryset, ordered=False)
+        self.assertQuerySetEqual(qs, expected_queryset, ordered=False)
 
     def test_open_data(self):
         qs = Feature.objects.open_data()
@@ -161,7 +161,7 @@ class TestFeatureQuerySet(TestCase):
             (self.feature_public_open_data),
             (self.feature_public_open_www),
         ]
-        self.assertQuerysetEqual(qs, expected_queryset, ordered=False)
+        self.assertQuerySetEqual(qs, expected_queryset, ordered=False)
 
     def test_www(self):
         qs = Feature.objects.www()
@@ -169,7 +169,7 @@ class TestFeatureQuerySet(TestCase):
             (self.feature_public_www),
             (self.feature_public_open_www),
         ]
-        self.assertQuerysetEqual(qs, expected_queryset, ordered=False)
+        self.assertQuerySetEqual(qs, expected_queryset, ordered=False)
 
 
 class TestFeatureRelatedQuerySet(TestCase):
@@ -236,7 +236,7 @@ class TestFeatureRelatedQuerySet(TestCase):
             (self.feature_value_www),
             (self.feature_value_open_www),
         ]
-        self.assertQuerysetEqual(qs, expected_queryset, ordered=False)
+        self.assertQuerySetEqual(qs, expected_queryset, ordered=False)
 
     def test_for_office_hki(self):
         qs = FeatureValue.objects.for_office_hki()
@@ -248,7 +248,7 @@ class TestFeatureRelatedQuerySet(TestCase):
             (self.feature_value_www),
             (self.feature_value_open_www),
         ]
-        self.assertQuerysetEqual(qs, expected_queryset, ordered=False)
+        self.assertQuerySetEqual(qs, expected_queryset, ordered=False)
 
     def test_for_office(self):
         qs = FeatureValue.objects.for_office()
@@ -259,7 +259,7 @@ class TestFeatureRelatedQuerySet(TestCase):
             (self.feature_value_www),
             (self.feature_value_open_www),
         ]
-        self.assertQuerysetEqual(qs, expected_queryset, ordered=False)
+        self.assertQuerySetEqual(qs, expected_queryset, ordered=False)
 
     def test_for_public(self):
         qs = FeatureValue.objects.for_public()
@@ -269,7 +269,7 @@ class TestFeatureRelatedQuerySet(TestCase):
             (self.feature_value_www),
             (self.feature_value_open_www),
         ]
-        self.assertQuerysetEqual(qs, expected_queryset, ordered=False)
+        self.assertQuerySetEqual(qs, expected_queryset, ordered=False)
 
     def test_open_data(self):
         qs = FeatureValue.objects.open_data()
@@ -277,7 +277,7 @@ class TestFeatureRelatedQuerySet(TestCase):
             (self.feature_value_public_open_data),
             (self.feature_value_open_www),
         ]
-        self.assertQuerysetEqual(qs, expected_queryset, ordered=False)
+        self.assertQuerySetEqual(qs, expected_queryset, ordered=False)
 
     def test_www(self):
         qs = FeatureValue.objects.www()
@@ -285,7 +285,7 @@ class TestFeatureRelatedQuerySet(TestCase):
             (self.feature_value_www),
             (self.feature_value_open_www),
         ]
-        self.assertQuerysetEqual(qs, expected_queryset, ordered=False)
+        self.assertQuerySetEqual(qs, expected_queryset, ordered=False)
 
 
 class TestFeatureRelatedProtectionLevelQuerySet(TestCase):
@@ -375,7 +375,7 @@ class TestFeatureRelatedProtectionLevelQuerySet(TestCase):
             (self.observation_public_feature_public_open_data),
             (self.observation_public_feature_public_www),
         ]
-        self.assertQuerysetEqual(qs, expected_queryset, ordered=False)
+        self.assertQuerySetEqual(qs, expected_queryset, ordered=False)
 
     def test_for_office(self):
         qs = Observation.objects.for_office()
@@ -386,7 +386,7 @@ class TestFeatureRelatedProtectionLevelQuerySet(TestCase):
             (self.observation_public_feature_public_open_data),
             (self.observation_public_feature_public_www),
         ]
-        self.assertQuerysetEqual(qs, expected_queryset, ordered=False)
+        self.assertQuerySetEqual(qs, expected_queryset, ordered=False)
 
     def test_for_public(self):
         qs = Observation.objects.for_public()
@@ -395,21 +395,21 @@ class TestFeatureRelatedProtectionLevelQuerySet(TestCase):
             (self.observation_public_feature_public_open_data),
             (self.observation_public_feature_public_www),
         ]
-        self.assertQuerysetEqual(qs, expected_queryset, ordered=False)
+        self.assertQuerySetEqual(qs, expected_queryset, ordered=False)
 
     def test_open_data(self):
         qs = Observation.objects.open_data()
         expected_queryset = [
             (self.observation_public_feature_public_open_data),
         ]
-        self.assertQuerysetEqual(qs, expected_queryset, ordered=False)
+        self.assertQuerySetEqual(qs, expected_queryset, ordered=False)
 
     def test_www(self):
         qs = Observation.objects.www()
         expected_queryset = [
             (self.observation_public_feature_public_www),
         ]
-        self.assertQuerysetEqual(qs, expected_queryset, ordered=False)
+        self.assertQuerySetEqual(qs, expected_queryset, ordered=False)
 
 
 class TestOrigin(TestCase):
