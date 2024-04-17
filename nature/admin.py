@@ -1,3 +1,4 @@
+from collections import OrderedDict
 from django.contrib.gis import admin
 from django.utils.translation import gettext_lazy as _
 from django.utils.html import format_html
@@ -259,7 +260,8 @@ class FeatureAdmin(admin.ModelAdmin):
         form = self.get_form(request, obj, fields=None)
         # Move the feature class field to the beginning of the ordered dict
         if "feature_class" in form.base_fields:
-            form.base_fields.move_to_end("feature_class", last=False)
+            form.base_fields = OrderedDict([(key, form.base_fields[key]) for key in ['feature_class']] +
+                                        [(key, form.base_fields[key]) for key in form.base_fields if key != 'feature_class'])
         return list(form.base_fields) + list(self.get_readonly_fields(request, obj))
 
     # Return formatted area as area
