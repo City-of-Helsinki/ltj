@@ -10,7 +10,7 @@ services:
       - '8000:8000'
     volumes:
       - .:/home/bew/bew
-      - $SSH_AUTH_SOCK:$SSH_AUTH_SOCK
+      # - $SSH_AUTH_SOCK:$SSH_AUTH_SOCK
     links:
       - postgis
     environment:
