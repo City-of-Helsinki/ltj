@@ -18,6 +18,7 @@ django-ckeditor==6.7.1
 django-environ==0.11.2
 django-helusers==0.11.0
 django-js-asset==2.2.0
+django_tinymce=4.0.0
 djangorestframework==3.15.1
 djangorestframework-gis==1.0
 ecdsa==0.18.0
