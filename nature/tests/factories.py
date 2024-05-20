@@ -74,6 +74,7 @@ class FeatureClassFactory(factory.django.DjangoModelFactory):
 
     class Meta:
         model = "nature.FeatureClass"
+        skip_postgeneration_save=True
 
 
 class FeatureFactory(factory.django.DjangoModelFactory):
@@ -89,6 +90,7 @@ class FeatureFactory(factory.django.DjangoModelFactory):
 
     class Meta:
         model = "nature.Feature"
+        skip_postgeneration_save=True
 
     @factory.post_generation
     def transactions(self, create, extracted, **kwargs):
