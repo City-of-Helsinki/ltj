@@ -4,8 +4,8 @@ from django.conf import settings
 
 class NatureOLWidget(OpenLayersWidget):
     template_name = "nature/openlayers-nature.html"
-    map_width = 800
-    map_height = 600
+    map_w = 800
+    map_h = 600
     default_x = 25496615.87
     default_y = 6672343.32
     default_zoom = 12
