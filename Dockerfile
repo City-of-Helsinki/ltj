@@ -20,6 +20,7 @@ RUN apt-get update \
         gdal-bin \
         python3 \
         python3-venv \
+        python3-tz \
         python3-psycopg2
 
 RUN dpkg-reconfigure locales
@@ -41,6 +42,6 @@ COPY --chown=bew:bew . /home/bew/bew/
 
 RUN python3.10 -m venv --system-site-packages /home/bew/.venv
 RUN /home/bew/.venv/bin/pip3 install -r /home/bew/bew/requirements.txt
-#RUN /home/bew/.venv/bin/pip3 install -r /home/bew/bew/requirements-dev.txt
+RUN /home/bew/.venv/bin/pip3 install -r /home/bew/bew/requirements-dev.txt
 
 CMD /bin/zsh
