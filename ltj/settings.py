@@ -111,7 +111,6 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.gis",
     "social_django",
-    "ckeditor",
     "rest_framework",
     "rest_framework_gis",
     "axes",

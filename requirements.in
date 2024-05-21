@@ -1,7 +1,6 @@
 django==4.2.*
 djangorestframework
 djangorestframework-gis
-django-ckeditor
 django-tinymce
 django-environ
 gunicorn==21.2.*
