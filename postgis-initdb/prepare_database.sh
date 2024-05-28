@@ -1,7 +1,7 @@
 #!/bin/bash
 
-DUMP_FILENAME='postgis_ltj_tietokanta_dumppi.backup'
-DUMP_FILE_PATH="/home/bew/bew/postgis-initdb/$DUMP_FILENAME"
+DUMP_FILENAME='postgis_ltj_tietokanta_dumppi_obfuskoitu.backup'
+DUMP_FILE_PATH="/docker-entrypoint-initdb.d/$DUMP_FILENAME"
 
 psql --username "ltj" --dbname "$POSTGRES_DB" --host "postgis" --port 5432 <<-EOSQL
     CREATE EXTENSION IF NOT EXISTS postgis;
