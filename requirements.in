@@ -13,4 +13,5 @@ django-axes
 pytz
 sentry-sdk
 freezegun
+tzdata
 
