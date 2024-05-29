@@ -485,6 +485,9 @@ fi
 # You can add to ~/.zsh/local.zsh your mercurial and git settings
 [[ -r ~/.zsh/local.zsh ]] && . ~/.zsh/local.zsh
 
+# Activate python virtual environment
+[[ -d ~/.venv ]] && source ~/.venv/bin/activate
+
 # Package `zsh-syntax-highlighting` on Ubuntu. Needs to be sourced at the end of this file
 if [[ -r /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]
 then
