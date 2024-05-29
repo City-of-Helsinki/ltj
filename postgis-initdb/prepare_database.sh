@@ -3,7 +3,8 @@
 DUMP_FILENAME='postgis_ltj_tietokanta_dumppi_obfuskoitu.backup'
 DUMP_FILE_PATH="/docker-entrypoint-initdb.d/$DUMP_FILENAME"
 
-psql --username "ltj" --dbname "$POSTGRES_DB" --host "postgis" --port 5432 <<-EOSQL
+psql --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-EOSQL
+
     CREATE EXTENSION IF NOT EXISTS postgis;
 
     CREATE ROLE katselu;
@@ -25,7 +26,7 @@ if [ -f "$DUMP_FILE_PATH" ]; then
   echo 'Restoring database from dump'
   echo "  postgis://$POSTGRES_USER@localhost/$POSTGRES_DB"
 
-  pg_restore --username="ltj" --dbname="$POSTGRES_DB" --clean --if-exists --verbose "$DUMP_FILE_PATH" --host "postgis" --port 5432
+  pg_restore --username="$POSTGRES_USER" --dbname="$POSTGRES_DB" --clean --if-exists --verbose "$DUMP_FILE_PATH"
 else
   echo "No dump file found."
 fi
