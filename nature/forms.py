@@ -1,9 +1,8 @@
-from ckeditor.widgets import CKEditorWidget
 from django import forms
 from django.contrib.admin.widgets import FilteredSelectMultiple
 from django.db import transaction
-from django.utils.translation import ugettext_lazy as _
-
+from django.utils.translation import gettext_lazy as _
+from tinymce.widgets import TinyMCE
 from nature.models import (
     FeatureClass,
     Criterion,
@@ -23,8 +22,8 @@ class FeatureForm(forms.ModelForm):
 
     class Meta:
         widgets = {
-            "text": CKEditorWidget,
-            "text_www": CKEditorWidget,
+            "text": TinyMCE,
+            "text_www": TinyMCE,
             "description": forms.Textarea,
             "notes": forms.Textarea,
             "name": forms.TextInput(attrs={"size": "80"}),

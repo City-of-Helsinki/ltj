@@ -1,9 +1,7 @@
 import os
 import environ
-import sentry_sdk
 import subprocess
 from helusers.defaults import SOCIAL_AUTH_PIPELINE  # noqa: F401
-from sentry_sdk.integrations.django import DjangoIntegration
 
 root = environ.Path(__file__) - 2
 BASE_DIR = root()
@@ -113,7 +111,6 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.gis",
     "social_django",
-    "ckeditor",
     "rest_framework",
     "rest_framework_gis",
     "axes",
@@ -122,16 +119,8 @@ INSTALLED_APPS = [
     "files",
     "users",
     "hmac_auth",
+    "tinymce"
 ]
-
-# Sentry
-if env("SENTRY_DSN"):
-    sentry_sdk.init(
-        dsn=env("SENTRY_DSN"),
-        environment=env("SENTRY_ENVIRONMENT"),
-        release=get_git_revision_hash(),
-        integrations=[DjangoIntegration()],
-    )
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -198,8 +187,6 @@ TIME_ZONE = "Europe/Helsinki"
 
 USE_I18N = True
 
-USE_L10N = True
-
 USE_TZ = True
 
 # Authentication & Authorization
@@ -213,7 +200,7 @@ AUTHENTICATION_BACKENDS = (
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
 
-SESSION_SERIALIZER = "django.contrib.sessions.serializers.PickleSerializer"
+SESSION_SERIALIZER = "django.contrib.sessions.serializers.JSONSerializer"
 
 OIDC_API_TOKEN_AUTH = {
     "AUDIENCE": env("OIDC_AUDIENCE"),
@@ -237,3 +224,44 @@ SRID = 3879  # Spatial reference system identifier used for geometry fields
 
 WFS_SERVER_URL = env("WFS_SERVER_URL")  # WFS server url for features
 WFS_NAMESPACE = env("WFS_NAMESPACE")  # Namespace for WFS layers
+
+DEFAULT_AUTO_FIELD='django.db.models.AutoField'
+
+TINYMCE_JS_URL = os.path.join(STATIC_URL, "tinymce/tinymce.min.js")
+
+TINYMCE_DEFAULT_CONFIG = {
+    "height": "500px",
+    "menubar": "file edit view insert format tools table help",
+    "plugins": "advlist lists link image charmap emoticons anchor searchreplace visualblocks code "
+    "media table code help",
+    "toolbar": "undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | "
+    "numlist bullist | forecolor "
+    "backcolor casechange | charmap emoticons | "
+    "insertfile image medialink anchor codesample | ",
+    "promotion": False,
+    "object_resizing": "img",
+    "file_picker_types": "image",
+    "file_picker_callback": """function (cb, value, meta) {
+        var input = document.createElement("input");
+        input.setAttribute("type", "file");
+        if (meta.filetype == "image") {
+            input.setAttribute("accept", "image/*");
+        }
+
+        input.onchange = function () {
+            var file = this.files[0];
+            var reader = new FileReader();
+            reader.onload = function () {
+                var id = "blobid" + (new Date()).getTime();
+                var blobCache = tinymce.activeEditor.editorUpload.blobCache;
+                var base64 = reader.result.split(",")[1];
+                var blobInfo = blobCache.create(id, file, base64);
+                blobCache.add(blobInfo);
+                cb(blobInfo.blobUri(), { title: file.name });
+            };
+            reader.readAsDataURL(file);
+        };
+        input.click();
+    }""",
+    "content_style": "body { font-family:Roboto,Helvetica,Arial,sans-serif; font-size:14px }",
+}

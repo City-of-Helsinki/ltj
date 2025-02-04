@@ -19,72 +19,57 @@ LTJ also has support for displaying HTML-formatted reports for natural
 sites. These are designed for linking from the Helsinki map service
 (kartta.hel.fi).
  
-## Installation
-
-This applies to both development and simple production scale (nature
-information is, sadly, not very popular). Note that you won't need to
-follow this approach if you have your own favorite Python process.
 
 ### Prerequisites
 
-* Python 3
-* PostgreSQL with PostGIS (other databases are not tested at all)
+* Python 3.10
+* Django 4.2 LTS
+* PostgreSQL with PostGIS
+* gunicorn 21.2
+
+
+## Preferred usage with Visual Studio Code
+
+Install Remote Containers support in Visual Studio Code with these instructions:
+
+* https://code.visualstudio.com/docs/remote/remote-overview
+* https://code.visualstudio.com/docs/remote/containers
+
+After that this should be easy, if all that magic works:
+
+* Open the project folder in Visual Studio Code
+* It asks to reopen the folder in remote container
+* Accept
+* Wait a while for it to automatically build the environment for you 
+
+You are free to change the included VSCode settings locally for yourself but it is
+expected that you produce code which pass linters defined in the preferred settings.
+
+In the debug panel you can run following with debugger enabled:
+
+* Django runserver in hot reload mode
+* Django shell
+* Django migrations
+* Generate new Django migrations for all Django apps
+
+Happy hacking :)
+
 
 ### Configuration
 
-LTJ uses environment variables for its configuration. These are particularly
-nice in container environments or other managed environments (like Heroku).
+LTJ uses `local_settings` settings module and environment variables for
+its configuration. Environmental variables are handled using
+`django-environ` -module.
 
-However for development, setting the environment variables is a bit
-annoying. In this case you will want to create `config.env` in the root
-of the source (ie. same place as this README). Start by renaming
-`config.env.example` to `config.env`. The example file should
-contain every setting currently available and commonly used
-values thereof.
+Configuration base for for `local_settings` can be found from file
+`local_settings.py.tpl_dev` file. VSCode remote container setup should copy
+this automatically as devault configuration file.
 
-### Preparing the database
+For `django-environ` also `config.env` can be created in the root of the source
+(ie. same place as this README). Start by renaming `config.env.example` to
+`config.env`. The example file should contain every setting currently available
+and commonly used values thereof.
 
-LTJ uses PostGIS for storing the geometries (areas on map) and/or points
-(locations on map) of natural phenomena. Therefore you need to have the
-PostGIS extension installed and enable for the database.
-
-Begin by adding enabling PostGIS extension for the default template;
-
-    sudo -u postgres psql -d template1 -c "CREATE EXTENSION IF NOT EXISTS postgis;"
-
-Create user and database
-
-    sudo -u postgres createuser -P -R -S ltj  # use password `ltj`
-    sudo -u postgres createdb -O ltj ltj
-   
-Allow user to create test database
-
-    sudo -u postgres psql -c "ALTER USER ltj CREATEDB;"
-    
-The application is build based on existing database, import data from a dump (
-note that it should be fresh dump from original database without any migration
-being applied on nature model):
-
-    psql -h localhost -p 5432 -U ltj ltj < data_dump.sql
-    
-Run the utility script to fix the database so that it can be managed by django:
-
-    psql -h localhost -U ltj -d ltj -a -f utility/add_alter_columns.sql
-    psql -h localhost -U ltj -d ltj -a -f utility/add_id_seq.sql
-    psql -h localhost -U ltj -d ltj -a -f utility/protection_level_comments.sql  # optional
-
-    # convert columns with type `timestamp without time zone` to type `timestamp with time zone`
-    psql -h localhost -U ltj -d ltj -a -f utility/drop_views.sql -f utility/tz_aware_timestamps.sql -f utility/create_views.sql
-
-Fake initial when first time run migrations on nature app:
-    
-    python manage.py migrate nature --fake-initial
-
-If migrations change the columns that are used by views, drop views before applying migrations and recreate after it.
-
-    psql -h localhost -U ltj -d ltj -a -f utility/drop_views.sql
-    python manage.py migrate
-    psql -h localhost -U ltj -d ltj -a -f utility/create_views.sql
 
 ### Tests
 

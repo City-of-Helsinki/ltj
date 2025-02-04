@@ -67,7 +67,7 @@ class TestFeatureReportHMACAuth(TestCase):
         response = self.client.get(url, **headers)
         self.assertEqual(response.status_code, 200)
         self.assertIn(
-            "<title>Kohderaportti - Admin</title>".encode("utf-8"), response.content
+            "<title>Feature Report - Admin</title>".encode("utf-8"), response.content
         )
 
         url = reverse(
@@ -76,21 +76,21 @@ class TestFeatureReportHMACAuth(TestCase):
         response = self.client.get(url, **headers)
         self.assertEqual(response.status_code, 200)
         self.assertIn(
-            "<title>Kohderaportti - Admin</title>".encode("utf-8"), response.content
+            "<title>Feature Report - Admin</title>".encode("utf-8"), response.content
         )
 
         url = reverse("nature:feature-report", kwargs={"pk": self.feature_office.id})
         response = self.client.get(url, **headers)
         self.assertEqual(response.status_code, 200)
         self.assertIn(
-            "<title>Kohderaportti - Admin</title>".encode("utf-8"), response.content
+            "<title>Feature Report - Admin</title>".encode("utf-8"), response.content
         )
 
         url = reverse("nature:feature-report", kwargs={"pk": self.feature_public.id})
         response = self.client.get(url, **headers)
         self.assertEqual(response.status_code, 200)
         self.assertIn(
-            "<title>Kohderaportti - Admin</title>".encode("utf-8"), response.content
+            "<title>Feature Report - Admin</title>".encode("utf-8"), response.content
         )
 
     @freeze_time("2019-01-17 12:00:00")
@@ -119,21 +119,21 @@ class TestFeatureReportHMACAuth(TestCase):
         response = self.client.get(url, **headers)
         self.assertEqual(response.status_code, 200)
         self.assertIn(
-            "<title>Kohderaportti - Virka Hki</title>".encode("utf-8"), response.content
+            "<title>Feature Report - Office Hki</title>".encode("utf-8"), response.content
         )
 
         url = reverse("nature:feature-report", kwargs={"pk": self.feature_office.id})
         response = self.client.get(url, **headers)
         self.assertEqual(response.status_code, 200)
         self.assertIn(
-            "<title>Kohderaportti - Virka Hki</title>".encode("utf-8"), response.content
+            "<title>Feature Report - Office Hki</title>".encode("utf-8"), response.content
         )
 
         url = reverse("nature:feature-report", kwargs={"pk": self.feature_public.id})
         response = self.client.get(url, **headers)
         self.assertEqual(response.status_code, 200)
         self.assertIn(
-            "<title>Kohderaportti - Virka Hki</title>".encode("utf-8"), response.content
+            "<title>Feature Report - Office Hki</title>".encode("utf-8"), response.content
         )
 
     @freeze_time("2019-01-17 12:00:00")
@@ -166,14 +166,14 @@ class TestFeatureReportHMACAuth(TestCase):
         response = self.client.get(url, **headers)
         self.assertEqual(response.status_code, 200)
         self.assertIn(
-            "<title>Kohderaportti - Virka</title>".encode("utf-8"), response.content
+            "<title>Feature Report - Office</title>".encode("utf-8"), response.content
         )
 
         url = reverse("nature:feature-report", kwargs={"pk": self.feature_public.id})
         response = self.client.get(url, **headers)
         self.assertEqual(response.status_code, 200)
         self.assertIn(
-            "<title>Kohderaportti - Virka</title>".encode("utf-8"), response.content
+            "<title>Feature Report - Office</title>".encode("utf-8"), response.content
         )
 
     @freeze_time("2019-01-17 12:00:00")
@@ -371,13 +371,13 @@ class TestSpeciesReportView(TestCase):
         view.object = self.species
 
         context = view.get_context_data()
-        self.assertQuerysetEqual(
+        self.assertQuerySetEqual(
             context["observations"],
             [
-                repr(self.observation_admin),
-                repr(self.observation_office_hki),
-                repr(self.observation_office),
-                repr(self.observation_www),
+                (self.observation_admin),
+                (self.observation_office_hki),
+                (self.observation_office),
+                (self.observation_www),
             ],
             ordered=False,
         )
@@ -396,12 +396,12 @@ class TestSpeciesReportView(TestCase):
         view.object = self.species
 
         context = view.get_context_data()
-        self.assertQuerysetEqual(
+        self.assertQuerySetEqual(
             context["observations"],
             [
-                repr(self.observation_office_hki),
-                repr(self.observation_office),
-                repr(self.observation_www),
+                (self.observation_office_hki),
+                (self.observation_office),
+                (self.observation_www),
             ],
             ordered=False,
         )
@@ -420,9 +420,9 @@ class TestSpeciesReportView(TestCase):
         view.object = self.species
 
         context = view.get_context_data()
-        self.assertQuerysetEqual(
+        self.assertQuerySetEqual(
             context["observations"],
-            [repr(self.observation_office), repr(self.observation_www)],
+            [(self.observation_office), (self.observation_www)],
             ordered=False,
         )
         self.assertEqual(context["secret_observation_count"], 2)
@@ -440,9 +440,9 @@ class TestSpeciesReportView(TestCase):
         view.object = self.species
 
         context = view.get_context_data()
-        self.assertQuerysetEqual(
+        self.assertQuerySetEqual(
             context["observations"],
-            [repr(self.observation_www)],
+            [(self.observation_www)],
         )
         self.assertEqual(context["secret_observation_count"], 0)
 
@@ -483,12 +483,12 @@ class TestFeatureObservationsReportView(TestCase):
         view.object = self.feature
 
         context = view.get_context_data()
-        self.assertQuerysetEqual(
+        self.assertQuerySetEqual(
             context["observations"],
             [
-                repr(self.observation_admin),
-                repr(self.observation_office),
-                repr(self.observation_www),
+                (self.observation_admin),
+                (self.observation_office),
+                (self.observation_www),
             ],
             ordered=False,
         )
@@ -509,9 +509,9 @@ class TestFeatureObservationsReportView(TestCase):
         view.object = self.feature
 
         context = view.get_context_data()
-        self.assertQuerysetEqual(
+        self.assertQuerySetEqual(
             context["observations"],
-            [repr(self.observation_office), repr(self.observation_www)],
+            [(self.observation_office), (self.observation_www)],
             ordered=False,
         )
         self.assertEqual(context["secret_observation_count"], 1)
@@ -531,9 +531,9 @@ class TestFeatureObservationsReportView(TestCase):
         view.object = self.feature
 
         context = view.get_context_data()
-        self.assertQuerysetEqual(
+        self.assertQuerySetEqual(
             context["observations"],
-            [repr(self.observation_office), repr(self.observation_www)],
+            [(self.observation_office), (self.observation_www)],
             ordered=False,
         )
         self.assertEqual(context["secret_observation_count"], 1)
@@ -553,9 +553,9 @@ class TestFeatureObservationsReportView(TestCase):
         view.object = self.feature
 
         context = view.get_context_data()
-        self.assertQuerysetEqual(
+        self.assertQuerySetEqual(
             context["observations"],
-            [repr(self.observation_www)],
+            [self.observation_www],
             ordered=False,
         )
         self.assertEqual(context["secret_observation_count"], 0)

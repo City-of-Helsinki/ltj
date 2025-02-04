@@ -7,3 +7,4 @@ pytest-django
 freezegun
 flake8
 black
+tzdata
