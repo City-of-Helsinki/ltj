@@ -205,7 +205,7 @@ class SquareInline(admin.StackedInline):
 
 
 @admin.register(Feature)
-class FeatureAdmin(admin.ModelAdmin):
+class FeatureAdmin(admin.GeoModelAdmin):
     readonly_fields = (
         "_area",
         "created_by",

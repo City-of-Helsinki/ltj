@@ -1,6 +1,11 @@
 #id_geometry_map .layer-switcher ul {
     margin-left: 0;
     padding-left: 1em;
+    background-color: rgb(255, 255, 255);
+}
+
+.layer-switcher li label {
+    color:rgb(0, 0, 0);
 }
 
 .nature-mouse-position {

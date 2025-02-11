@@ -29,7 +29,7 @@ class NatureOLWidget(OpenLayersWidget):
 
     def __init__(self, attrs=None):
         super().__init__()
-        for key in ("default_x", "default_y", "default_zoom"):
+        for key in ("map_w", "map_h", "default_x", "default_y", "default_zoom"):
             self.attrs[key] = getattr(self, key)
         if attrs:
             self.attrs.update(attrs)
