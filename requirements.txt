@@ -9,7 +9,7 @@ cachetools==5.3.3
 certifi==2024.2.2
 cffi==1.16.0
 charset-normalizer==3.3.2
-cryptography==42.0.5
+cryptography==44.0.1
 defusedxml==0.8.0rc2
 deprecation==2.1.0
 Django==4.2.11
