@@ -12,7 +12,7 @@ charset-normalizer==3.3.2
 cryptography==42.0.5
 defusedxml==0.8.0rc2
 deprecation==2.1.0
-Django==4.2.11
+Django==4.2.20
 django-axes==6.4.0
 django-environ==0.11.2
 django-helusers==0.11.0
