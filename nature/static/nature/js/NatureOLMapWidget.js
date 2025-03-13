@@ -17,37 +17,6 @@ var GeometryTypeControl = function(opt_options) {
     element.title = options.title;
 
     var self = this;
- /*    var switchType = function(e) {
-        e.preventDefault();
-        var previousGeometryType = options.widget.currentGeometryType;
-
-        if (previousGeometryType !== self) {
-
-            var isMultiGeometry = options.type.indexOf('Multi') > -1;
-            options.widget.setIsDrawingMultiGeometry(isMultiGeometry);
-            options.widget           .removeInteraction(options.widget.interactions.draw);
-            options.widget.interactions.draw = new ol.interaction.Draw({
-                features: options.widget.featureCollection,
-                type: options.type
-            });
-            options.widget.map.addInteraction(options.widget.interactions.draw);
-            if (previousGeometryType) {
-                var className = previousGeometryType.element.className.replace(/ type-active/g, '');
-                previousGeometryType.element.className = className;
-            }
-            options.widget.currentGeometryType = self;
-            element.className += " type-active";
-        }
-    };
-
-    element.addEventListener('click', switchType, false);
-    element.addEventListener('touchstart', switchType, false);
-
-    ol.control.Control.call(this, {
-        element: element
-    });
-};
-ol.inherits(GeometryTypeControl, ol.control.Control); */
     var switchType = function(e) {
         e.preventDefault();
         var previousGeometryType = options.widget.currentGeometryType;
@@ -203,7 +172,7 @@ ol.inherits(GeometryTypeControl, ol.control.Control); */
     };
 
     MapWidget.prototype.setIsDrawingMultiGeometry = function(isDrawingMultiGeometry) {
-        this._isDrawingMultiGeometry = isDrawingMultiGeometry;
+        return this._isDrawingMultiGeometry = isDrawingMultiGeometry;
     };
 
     MapWidget.prototype.createMap = function() {
@@ -540,7 +509,6 @@ ol.inherits(GeometryTypeControl, ol.control.Control); */
     MapWidget.prototype.showGeomTypeIcons = function() {
         if (this.typeChoices) {
             var divs = document.getElementsByClassName("switch-type");
-
             for (var i = 0; i < divs.length; i++) {
                 divs[i].style.visibility = "visible";
                 divs[i].style.display = "block";
@@ -645,4 +613,3 @@ ol.inherits(GeometryTypeControl, ol.control.Control); */
 
     window.MapWidget = MapWidget;
 })();
-
