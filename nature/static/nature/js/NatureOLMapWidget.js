@@ -5,6 +5,7 @@
 
 var GeometryTypeControl = function(opt_options) {
     'use strict';
+    console.log("Creating GeometryTypeControl:", opt_options.type);
     // Map control to switch type when geometry type is unknown
     var options = opt_options || {};
 
@@ -16,13 +17,15 @@ var GeometryTypeControl = function(opt_options) {
     element.title = options.title;
 
     var self = this;
-    var switchType = function(e) {
+ /*    var switchType = function(e) {
         e.preventDefault();
         var previousGeometryType = options.widget.currentGeometryType;
+
         if (previousGeometryType !== self) {
+
             var isMultiGeometry = options.type.indexOf('Multi') > -1;
             options.widget.setIsDrawingMultiGeometry(isMultiGeometry);
-            options.widget.map.removeInteraction(options.widget.interactions.draw);
+            options.widget           .removeInteraction(options.widget.interactions.draw);
             options.widget.interactions.draw = new ol.interaction.Draw({
                 features: options.widget.featureCollection,
                 type: options.type
@@ -44,7 +47,40 @@ var GeometryTypeControl = function(opt_options) {
         element: element
     });
 };
-ol.inherits(GeometryTypeControl, ol.control.Control);
+ol.inherits(GeometryTypeControl, ol.control.Control); */
+    var switchType = function(e) {
+        e.preventDefault();
+        var previousGeometryType = options.widget.currentGeometryType;
+
+        if (previousGeometryType !== self) {
+            var isMultiGeometry = options.type.indexOf('Multi') > -1;
+            options.widget.setIsDrawingMultiGeometry(isMultiGeometry);
+
+            // Remove existing drawing interaction
+            options.widget.map.removeInteraction(options.widget.interactions.draw);
+
+            // Ensure drawing is properly activated
+            options.widget.interactions.draw = new ol.interaction.Draw({
+                features: options.widget.featureCollection,
+                type: options.type
+            });
+            options.widget.map.addInteraction(options.widget.interactions.draw);
+
+            // Remove type-active class name from possible previous selected drawing type
+            if (previousGeometryType) {
+                previousGeometryType.element.className = previousGeometryType.element.className.replace(/ type-active/g, '');
+            }
+            options.widget.currentGeometryType = self;
+            element.className += " type-active";
+        }
+    };
+
+    element.addEventListener('click', switchType, false);
+    element.addEventListener('touchstart', switchType, false);
+
+    ol.control.Control.call(this, { element: element });
+    };
+    ol.inherits(GeometryTypeControl, ol.control.Control);
 
 (function() {
     'use strict';
@@ -61,7 +97,7 @@ ol.inherits(GeometryTypeControl, ol.control.Control);
             default_y: 0,
             default_x: 0,
             default_zoom: 12,
-            is_collection: options.geom_name.indexOf('Multi') > -1 || options.geom_name.indexOf('Collection') > -1
+            is_collection: options.geom_name.indexOf('Multi') > -1 || options.geom_name.indexOf('Collection') > -1,
         };
 
         // Altering using user-provided options
@@ -97,7 +133,8 @@ ol.inherits(GeometryTypeControl, ol.control.Control);
             map: this.map,
             source: new ol.source.Vector({
                 features: this.featureCollection,
-                useSpatialIndex: false // improve performance
+                useSpatialIndex: false, // improve performance
+                wrapX:false
             }),
             style: new ol.style.Style({
                 stroke: stroke,
@@ -166,7 +203,7 @@ ol.inherits(GeometryTypeControl, ol.control.Control);
     };
 
     MapWidget.prototype.setIsDrawingMultiGeometry = function(isDrawingMultiGeometry) {
-        return this._isDrawingMultiGeometry = isDrawingMultiGeometry;
+        this._isDrawingMultiGeometry = isDrawingMultiGeometry;
     };
 
     MapWidget.prototype.createMap = function() {
@@ -379,6 +416,25 @@ ol.inherits(GeometryTypeControl, ol.control.Control);
     };
 
     MapWidget.prototype.createInteractions = function() {
+        if (!this.map) {
+            console.error("Map is not initialized yet!");
+            return;
+        }
+
+        if (!this.featureCollection) {
+            console.error("Feature collection is missing!");
+            return;
+        }
+
+        // Remove any existing interactions to prevent conflicts
+        this.map.getInteractions().forEach(function(interaction) {
+            if (interaction instanceof ol.interaction.Draw ||
+                interaction instanceof ol.interaction.Modify ||
+                interaction instanceof ol.interaction.Select) {
+                geodjango_geometry.map.removeInteraction(interaction);
+            }
+        });
+
         // Initialize the modify interaction
         this.interactions.modify = new ol.interaction.Modify({
             features: this.featureCollection,
@@ -389,43 +445,34 @@ ol.inherits(GeometryTypeControl, ol.control.Control);
         });
 
         // Initialize the draw interaction
-        var geomType = this.options.geom_name;
-        if (geomType === "Unknown" || geomType === "GeometryCollection") {
-            // Default to Point, but create icons to switch type
-            geomType = "Point";
+        var geomType = this.options.geom_name || "Unknown";
+        if (geomType === "Unknown" || geomType === "GeometryCollection" || geomType === undefined  || geomType === "Geometry") {
             this.currentGeometryType = null;
-            this.map.addControl(new GeometryTypeControl({
-                widget: this,
-                type: "Point",
-                active: false,
-                title: "Piste"
-            }));
-            this.map.addControl(new GeometryTypeControl({
-                widget: this,
-                type: "LineString",
-                active: false,
-                title: "Viiva"
-            }));
-            this.map.addControl(new GeometryTypeControl({
-                widget: this,
-                type: "Polygon",
-                active: false,
-                title: "Monikulmio"
-            }));
-            this.map.addControl(new GeometryTypeControl({
-                widget: this,
-                type: "MultiLineString",
-                active: false,
-                title: "multi-linestring"
-            }));
-            this.map.addControl(new GeometryTypeControl({
-                widget: this,
-                type: "MultiPolygon",
-                active: false,
-                title: "multi-polygon"
-            }));
+
+            // Define custom titles
+            const typeTitles = {
+                "Point": "Piste",
+                "LineString": "Viiva",
+                "Polygon": "Monikulmio",
+                "MultiLineString": "multi-lineString",
+                "MultiPolygon": "multi-polygon"
+            };
+
+            // Iterate over the geometry types and assign attributes
+            ["Point", "LineString", "Polygon", "MultiLineString", "MultiPolygon"].forEach(type => {
+                this.map.addControl(new GeometryTypeControl({
+                    widget: this,
+                    type: type,
+                    active: false,
+                    title: typeTitles[type]
+                }));
+            });
+
             this.typeChoices = true;
+        } else {
+            console.warn("⚠️ Condition NOT met. geomType is:", geomType);
         }
+
         this.interactions.draw = new ol.interaction.Draw({
             features: this.featureCollection,
             type: geomType
@@ -437,15 +484,25 @@ ol.inherits(GeometryTypeControl, ol.control.Control);
                 return layer && layer.get('type') === 'feature-wfs';
             }
         });
-        var selectedFeatures = this.interactions.select.getFeatures();
+        if (geomType.indexOf('Multi') > -1) {
+            this.setIsDrawingMultiGeometry(true);
+        } else {
+            this.setIsDrawingMultiGeometry(false);
+        }
+
         var self = this;
-        selectedFeatures.on('add', function(event) {
+        this.interactions.select.getFeatures().on('add', function(event) {
             var feature = event.target.item(0);
             self.showFeaturePopup(feature);
         });
-        selectedFeatures.on('remove', function() {
+        this.interactions.select.getFeatures().on('remove', function() {
             self.closeFeaturePopup();
         });
+
+        // Add interactions to the map
+        this.map.addInteraction(this.interactions.modify);
+        this.map.addInteraction(this.interactions.draw);
+        this.map.addInteraction(this.interactions.select);
     };
 
     MapWidget.prototype.showFeaturePopup = function(feature) {
@@ -483,8 +540,10 @@ ol.inherits(GeometryTypeControl, ol.control.Control);
     MapWidget.prototype.showGeomTypeIcons = function() {
         if (this.typeChoices) {
             var divs = document.getElementsByClassName("switch-type");
-            for (var i = 0; i !== divs.length; i++) {
+
+            for (var i = 0; i < divs.length; i++) {
                 divs[i].style.visibility = "visible";
+                divs[i].style.display = "block";
             }
         }
     };
@@ -501,6 +560,7 @@ ol.inherits(GeometryTypeControl, ol.control.Control);
             var divs = document.getElementsByClassName("switch-type");
             for (var i = 0; i !== divs.length; i++) {
                 divs[i].style.visibility = "hidden";
+                divs[i].style.display = "none";
             }
         }
     };
@@ -511,22 +571,42 @@ ol.inherits(GeometryTypeControl, ol.control.Control);
         document.getElementById(this.options.id).value = '';
         this.enableDrawing();
     };
+    // set flag value for editing to match the initial state of editing
+    MapWidget.prototype.isEditing = true;
 
     MapWidget.prototype.editFeatures = function() {
-        var isEditing = geodjango_geometry.map.getInteractions(geodjango_geometry).getArray().indexOf(geodjango_geometry.interactions.modify) !== -1;
-        var editButtonContainer = document.querySelector(".edit_features")
-        if (isEditing) {
+
+        // Find UI elements for editing state setting
+        var editFeatureContainer = document.querySelector(".edit_features");
+        var enableEditText = document.querySelector(".enable-edit");
+        var disableEditText = document.querySelector(".disable-edit");
+
+        if (this.isEditing) {
+            // Turn editing OFF
             this.map.removeInteraction(this.interactions.draw);
             this.map.removeInteraction(this.interactions.modify);
             this.map.removeInteraction(this.interactions.select);
-            editButtonContainer.classList.remove("is-editing");
-        }
-        else {
+
+            editFeatureContainer.classList.remove("editing-active");
+
+            // Ensure correct button visibility
+            enableEditText.style.display = "inline";  // Show "Edit"
+            disableEditText.style.display = "none";   // Hide "Stop Editing"
+        } else {
+            // Turn editing ON
             this.map.addInteraction(this.interactions.draw);
             this.map.addInteraction(this.interactions.modify);
             this.map.addInteraction(this.interactions.select);
-            editButtonContainer.classList.add("is-editing");
+
+            editFeatureContainer.classList.add("editing-active");
+
+            // Ensure correct button visibility
+            enableEditText.style.display = "none";   // Hide "Edit"
+            disableEditText.style.display = "inline"; // Show "Stop Editing"
         }
+
+        // Toggle the editing state
+        this.isEditing = !this.isEditing;
     };
 
     MapWidget.prototype.serializeFeatures = function() {
@@ -565,3 +645,4 @@ ol.inherits(GeometryTypeControl, ol.control.Control);
 
     window.MapWidget = MapWidget;
 })();
+
