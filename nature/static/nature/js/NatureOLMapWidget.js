@@ -5,7 +5,6 @@
 
 var GeometryTypeControl = function(opt_options) {
     'use strict';
-    console.log("Creating GeometryTypeControl:", opt_options.type);
     // Map control to switch type when geometry type is unknown
     var options = opt_options || {};
 
