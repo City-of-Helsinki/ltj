@@ -41,6 +41,17 @@ var GeometryTypeControl = function(opt_options) {
             options.widget.currentGeometryType = self;
             element.className += " type-active";
         }
+        this.typeChoices = true;
+
+        // Edit button is toggled, when geometry type has been chosen
+        var editFeatureContainer = document.querySelector(".edit_features");
+        if (this.typeChoices) {
+            // Editing is ON
+            editFeatureContainer.classList.add("editing-active");
+        } else {
+            // Editing is OFF
+            editFeatureContainer.classList.remove("editing-active");
+        }
     };
 
     element.addEventListener('click', switchType, false);
@@ -435,8 +446,6 @@ var GeometryTypeControl = function(opt_options) {
                     title: typeTitles[type]
                 }));
             });
-
-            this.typeChoices = true;
         } else {
             console.warn("⚠️ Condition NOT met. geomType is:", geomType);
         }
@@ -471,6 +480,21 @@ var GeometryTypeControl = function(opt_options) {
         this.map.addInteraction(this.interactions.modify);
         this.map.addInteraction(this.interactions.draw);
         this.map.addInteraction(this.interactions.select);
+
+        // Select the textarea element that contains geometry coordinates, if view is change view
+        let textarea = document.querySelector("textarea");
+
+        // Select the edit button
+        var editFeatureContainer = document.querySelector(".edit_features");
+
+        // Edit button is set for change feature / add feature view
+        if (textarea && textarea.value.trim() !== "") {
+            // this is change feature view, editing is ON
+            editFeatureContainer.classList.add("editing-active");
+        } else {
+            // this is add feature view, editing is OFF
+            editFeatureContainer.classList.remove("editing-active");
+        }
     };
 
     MapWidget.prototype.showFeaturePopup = function(feature) {
