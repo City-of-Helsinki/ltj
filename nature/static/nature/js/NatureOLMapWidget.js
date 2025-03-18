@@ -23,7 +23,6 @@ var GeometryTypeControl = function(opt_options) {
         if (previousGeometryType !== self) {
             var isMultiGeometry = options.type.indexOf('Multi') > -1;
             options.widget.setIsDrawingMultiGeometry(isMultiGeometry);
-
             // Remove existing drawing interaction
             options.widget.map.removeInteraction(options.widget.interactions.draw);
 
@@ -164,14 +163,6 @@ var GeometryTypeControl = function(opt_options) {
         this.createInteractions();
         if (initial_value && !this.options.is_collection) {
             this.disableDrawing();
-        }
-
-        // Enable drawing if editing an existing multi-geometry feature
-        if (initialGeomType.indexOf('Multi') > -1) {
-            var controlElement = document.getElementsByClassName('type-' + initialGeomType)[0];
-            controlElement.click();
-        } else {
-            this.setIsDrawingMultiGeometry(false);
         }
 
         this.ready = true;
@@ -476,25 +467,9 @@ var GeometryTypeControl = function(opt_options) {
             self.closeFeaturePopup();
         });
 
-        // Add interactions to the map
-        this.map.addInteraction(this.interactions.modify);
-        this.map.addInteraction(this.interactions.draw);
-        this.map.addInteraction(this.interactions.select);
-
-        // Select the textarea element that contains geometry coordinates, if view is change view
-        let textarea = document.querySelector("textarea");
-
-        // Select the edit button
+        // Select the edit button and set it to 'Edit' as default
         var editFeatureContainer = document.querySelector(".edit_features");
-
-        // Edit button is set for change feature / add feature view
-        if (textarea && textarea.value.trim() !== "") {
-            // this is change feature view, editing is ON
-            editFeatureContainer.classList.add("editing-active");
-        } else {
-            // this is add feature view, editing is OFF
-            editFeatureContainer.classList.remove("editing-active");
-        }
+        editFeatureContainer.classList.remove("editing-active");
     };
 
     MapWidget.prototype.showFeaturePopup = function(feature) {
