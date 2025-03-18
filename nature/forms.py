@@ -3,8 +3,10 @@ from django.contrib.admin.widgets import FilteredSelectMultiple
 from django.db import transaction
 from django.utils.translation import gettext_lazy as _
 from tinymce.widgets import TinyMCE
+from nature.widgets import NatureOLWidget
 from nature.models import (
     FeatureClass,
+    Feature,
     Criterion,
     ConservationProgramme,
     Protection,
@@ -21,12 +23,15 @@ class FeatureForm(forms.ModelForm):
     )
 
     class Meta:
+        model = Feature
+        fields = '__all__'
         widgets = {
             "text": TinyMCE,
             "text_www": TinyMCE,
             "description": forms.Textarea,
             "notes": forms.Textarea,
             "name": forms.TextInput(attrs={"size": "80"}),
+            "geometry": NatureOLWidget(),
         }
         help_texts = {
             "geometry": (
