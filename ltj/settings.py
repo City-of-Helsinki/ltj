@@ -26,8 +26,6 @@ SOCIAL_AUTH_PIPELINE = (
     # Populate the extra_data field in the social record with the values
     # specified by settings (and the default ones like access_token, etc).
     "social_core.pipeline.social_auth.load_extra_data",
-    # Store the end session URL in the user's session data so that
-    # we can format logout links properly.
 )
 
 root = environ.Path(__file__) - 2
