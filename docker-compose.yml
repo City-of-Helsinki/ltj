@@ -36,8 +36,8 @@ services:
     tty: true
 
   postgis:
-#    image: postgis/postgis:16-3.4-alpine # Postgres version to be upgraded to after infra update
-    image: postgis/postgis:13-3.3-alpine
+    image: postgis/postgis:16-3.4-alpine # Postgres version to be upgraded to after infra update
+#    image: postgis/postgis:13-3.3-alpine
     environment:
       - POSTGRES_PASSWORD=luontotieto
       - POSTGRES_USER=ltj

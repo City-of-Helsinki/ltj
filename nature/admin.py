@@ -205,7 +205,7 @@ class SquareInline(admin.StackedInline):
 
 
 @admin.register(Feature)
-class FeatureAdmin(admin.OSMGeoAdmin):
+class FeatureAdmin(admin.GISModelAdmin):
     form = FeatureForm
     readonly_fields = (
         "_area",
@@ -261,8 +261,14 @@ class FeatureAdmin(admin.OSMGeoAdmin):
         form = self.get_form(request, obj, fields=None)
         # Move the feature class field to the beginning of the ordered dict
         if "feature_class" in form.base_fields:
-            form.base_fields = OrderedDict([(key, form.base_fields[key]) for key in ['feature_class']] +
-                                        [(key, form.base_fields[key]) for key in form.base_fields if key != 'feature_class'])
+            form.base_fields = OrderedDict(
+                [(key, form.base_fields[key]) for key in ["feature_class"]]
+                + [
+                    (key, form.base_fields[key])
+                    for key in form.base_fields
+                    if key != "feature_class"
+                ]
+            )
         return list(form.base_fields) + list(self.get_readonly_fields(request, obj))
 
     # Return formatted area as area
