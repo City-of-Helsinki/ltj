@@ -8,8 +8,12 @@ asttokens==3.0.1
     # via stack-data
 black==26.3.1
     # via -r requirements-dev.in
+build==1.4.3
+    # via pip-tools
 click==8.3.2
-    # via black
+    # via
+    #   black
+    #   pip-tools
 coverage[toml]==7.13.5
     # via
     #   -r requirements-dev.in
@@ -45,13 +49,17 @@ mypy-extensions==1.1.0
 packaging==26.1
     # via
     #   black
+    #   build
     #   pytest
+    #   wheel
 parso==0.8.6
     # via jedi
 pathspec==1.0.4
     # via black
 pexpect==4.9.0
     # via ipython
+pip-tools==7.5.3
+    # via -r requirements-dev.in
 platformdirs==4.9.6
     # via black
 pluggy==1.6.0
@@ -72,6 +80,10 @@ pygments==2.20.0
     # via
     #   ipython
     #   pytest
+pyproject-hooks==1.2.0
+    # via
+    #   build
+    #   pip-tools
 pytest==9.0.3
     # via
     #   -r requirements-dev.in
@@ -92,7 +104,9 @@ stack-data==0.6.3
 tomli==2.4.1
     # via
     #   black
+    #   build
     #   coverage
+    #   pip-tools
     #   pytest
 traitlets==5.14.3
     # via
@@ -107,3 +121,9 @@ tzdata==2026.1
     # via -r requirements-dev.in
 wcwidth==0.6.0
     # via prompt-toolkit
+wheel==0.46.3
+    # via pip-tools
+
+# The following packages are considered to be unsafe in a requirements file:
+# pip
+# setuptools
