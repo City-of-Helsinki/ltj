@@ -30,7 +30,8 @@ services:
     networks:
       - network
     depends_on:
-      - postgis
+      postgis:
+        condition: service_healthy
     stdin_open: true
     tty: true
 
@@ -41,6 +42,11 @@ services:
       - POSTGRES_USER=ltj
       - POSTGRES_DB=ltj
       - LANG=fi_FI.UTF-8
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "ltj"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
     volumes:
       - ./postgis-initdb:/docker-entrypoint-initdb.d
       - postgis:/var/lib/postgis/data
