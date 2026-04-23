@@ -5,6 +5,7 @@ django-tinymce
 django-environ
 gunicorn==21.2.*
 psycopg2-binary
+pymemcache
 requests
 pyshp
 django-helusers

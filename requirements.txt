@@ -80,6 +80,8 @@ pyjwt[crypto]==2.12.1
     # via
     #   pyjwt
     #   social-auth-core
+pymemcache==4.0.0
+    # via -r requirements.in
 pyshp==3.0.3
     # via -r requirements.in
 python-dateutil==2.9.0.post0
