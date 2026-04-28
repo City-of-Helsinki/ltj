@@ -231,8 +231,7 @@ class FeatureAdmin(admin.GISModelAdmin):
     ]
     actions = None
 
-    widget = NatureOLWidget
-    map_template = "nature/openlayers-nature.html"
+    gis_widget = NatureOLWidget
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
