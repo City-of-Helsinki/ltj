@@ -1,6 +1,7 @@
 ipython
 coverage
 factory-boy
+pip-tools
 pytest
 pytest-cov
 pytest-django

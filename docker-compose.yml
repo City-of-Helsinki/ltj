@@ -1,5 +1,4 @@
 ---
-version: '3'
 services:
   runserver:
     user: bew
@@ -31,18 +30,23 @@ services:
     networks:
       - network
     depends_on:
-      - postgis
+      postgis:
+        condition: service_healthy
     stdin_open: true
     tty: true
 
   postgis:
-#    image: postgis/postgis:16-3.4-alpine # Postgres version to be upgraded to after infra update
-    image: postgis/postgis:13-3.3-alpine
+    image: postgis/postgis:17-3.6-alpine
     environment:
       - POSTGRES_PASSWORD=luontotieto
       - POSTGRES_USER=ltj
       - POSTGRES_DB=ltj
       - LANG=fi_FI.UTF-8
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "ltj"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
     volumes:
       - ./postgis-initdb:/docker-entrypoint-initdb.d
       - postgis:/var/lib/postgis/data
