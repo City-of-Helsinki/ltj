@@ -56,7 +56,7 @@ ecdsa==0.19.2
     # via python-jose
 freezegun==1.5.5
     # via -r requirements.in
-gunicorn==21.2.0
+gunicorn==22.0.0
     # via -r requirements.in
 idna==3.11
     # via requests
