@@ -148,6 +148,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "ltj.path_prefix_middleware.PathPrefixMiddleware"
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
