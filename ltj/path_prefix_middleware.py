@@ -11,3 +11,4 @@ class PathPrefixMiddleware:
     script_prefix = request.headers.get('X-Forwarded-Prefix', None)
     if script_prefix:
       set_script_prefix(script_prefix)
+    return self.get_response(request)
