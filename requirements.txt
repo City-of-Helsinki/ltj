@@ -76,7 +76,7 @@ pyasn1==0.6.3
     #   rsa
 pycparser==3.0
     # via cffi
-pyjwt[crypto]==2.12.1
+pyjwt[crypto]==2.13.0
     # via
     #   pyjwt
     #   social-auth-core
