@@ -80,7 +80,9 @@ class SpeciesAdmin(admin.ModelAdmin):
     def report(self, obj):
         url = reverse("nature:species-report", kwargs={"pk": obj.id})
         return format_html(
-            '<a target="_blank" href="{0}">{1}</a>'.format(url, _("Species report"))
+            '<a target="_blank" href="{}">{}</a>',
+            url,
+            _("Spesies report"),
         )
 
     report.allow_tags = True
@@ -279,7 +281,9 @@ class FeatureAdmin(admin.GISModelAdmin):
     def report(self, obj):
         url = reverse("nature:feature-report", kwargs={"pk": obj.id})
         return format_html(
-            '<a target="_blank" href="{0}">{1}</a>'.format(url, _("Feature report"))
+            '<a target="_blank" href="{}">{}</a>',
+            url,
+            _("Feature report"),
         )
 
     report.allow_tags = True
