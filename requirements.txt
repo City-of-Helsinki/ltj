@@ -47,6 +47,7 @@ django-helusers==1.1.0
 django-tinymce==5.0.0
     # via -r requirements.in
 djangorestframework==3.17.2
+    # nosta 3.18.2
     # via
     #   -r requirements.in
     #   djangorestframework-gis
@@ -108,12 +109,14 @@ six==1.17.0
     # via
     #   ecdsa
     #   python-dateutil
-social-auth-app-django==5.7.0
+social-auth-app-django==7.2.0
+    # vanha 5.7.0
     # via -r requirements.in
-social-auth-core==4.8.5
+social-auth-core==6.2.0
+    # vanha 4.8.5
+    # nosta 6.2.0
     # via social-auth-app-django
 sqlparse==0.6.0
-
     # via django
 typing-extensions==4.15.0
     # via
