@@ -109,11 +109,8 @@ six==1.17.0
     #   ecdsa
     #   python-dateutil
 social-auth-app-django==7.2.0
-    # vanha 5.7.0
     # via -r requirements.in
 social-auth-core==6.2.0
-    # vanha 4.8.5
-    # nosta 6.2.0
     # via social-auth-app-django
 sqlparse==0.6.0
     # via django
