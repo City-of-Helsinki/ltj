@@ -47,7 +47,6 @@ django-helusers==1.1.0
 django-tinymce==5.0.0
     # via -r requirements.in
 djangorestframework==3.18.2
-    # nosta 3.17.2
     # via
     #   -r requirements.in
     #   djangorestframework-gis
@@ -93,7 +92,7 @@ python3-openid==3.2.0
     # via social-auth-core
 pytz==2026.1.post1
     # via -r requirements.in
-requests==2.33.1
+requests>=2.34.0,<3.0.0
     # via
     #   -r requirements.in
     #   django-helusers
