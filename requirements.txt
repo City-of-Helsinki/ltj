@@ -46,8 +46,8 @@ django-helusers==1.1.0
     # via -r requirements.in
 django-tinymce==5.0.0
     # via -r requirements.in
-djangorestframework==3.17.2
-    # nosta 3.18.2
+djangorestframework==3.18.2
+    # nosta 3.17.2
     # via
     #   -r requirements.in
     #   djangorestframework-gis
