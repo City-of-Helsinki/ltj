@@ -10,7 +10,7 @@ asgiref==3.11.1
     #   django-axes
 cachetools==7.0.5
     # via django-helusers
-certifi==2026.2.25
+certifi==2026.10.18
     # via
     #   requests
     #   sentry-sdk
@@ -121,7 +121,7 @@ typing-extensions==4.15.0
     #   pyjwt
 tzdata==2026.1
     # via -r requirements.in
-urllib3==2.7.0
+urllib3==2.8.0
     # via
     #   requests
     #   sentry-sdk
